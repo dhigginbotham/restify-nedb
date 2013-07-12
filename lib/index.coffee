@@ -27,15 +27,15 @@ module.exports = (opts, app) ->
   @cache = {}
   @cache.store = undefined
   @cache.maxAge = 1000 * 60 * 60
+
+  @middleware = []
+
+  if opts? then _.extend @, opts
   
   if @memory_store == false
     @ds = new DataStore filename: path.join @file_path, @file_name
   else
     @ds = new DataStore() 
-
-  @middleware = []
-
-  if opts? then _.extend @, opts
 
   # define our route uri w/ version, etc
   uri = util.format if @version? then @prefix + @version else @prefix
