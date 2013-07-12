@@ -19,24 +19,25 @@ restify-nedb was built to give you restful api resources for client side applica
 `npm install restify-nedb --save`
 
 ```coffee
-  express = require "express"
-  app = module.exports = express()
+express = require "express"
+app = module.exports = express()
 
-  nedb = require "restify-nedb"
-  ensure = require "../passport/middleware"
+nedb = require "restify-nedb"
+ensure = require "../passport/middleware"
 
-  new nedb {
-    prefix: "/session"
-    middleware: [ensure.admins]
-    cache: 
-      maxAge: 1000 * 60 * 60
-  }, app
+new nedb {
+  prefix: "/session"
+  middleware: [ensure.admins]
+  cache: 
+    maxAge: 1000 * 60 * 60
+}, app
 ```
 ----
 
 ##### Settings
 - `prefix` defaults to `/ds`
 - `version` defaults to `/v1`
+- `exclude` defaults to `[]` (showing all)
 - `middleware` array of middleware, defaults to `[]`
 - `memory_store` defaults to false
 - `file_name` defaults to `nedb-filestore.db`

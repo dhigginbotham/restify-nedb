@@ -11,6 +11,7 @@ ensure = require "../passport/middleware"
 new nedb {
   prefix: "/session"
   middleware: [ensure.admins]
+  exclude: ['_id', 'stale']
   cache: 
     maxAge: 1000 * 60 * 60
 }, app

@@ -10,9 +10,9 @@ extendify = require "./extended"
 ds = null
 # crudify switch, will handle all acceptable routes and pass json errors
 # on unsupported request methods.
-crudify = (store, req, cache, fn) ->
+crudify = (opts, store, req, cache, fn) ->
 
-  ds = new extendify store
+  ds = new extendify opts.ds
   Schema = ds.Schema
 
   # listen for `req.param('id')` will fallback until it finds the id
@@ -28,6 +28,8 @@ crudify = (store, req, cache, fn) ->
   # do our switch stuff based on this variable
   method = req.method.toLowerCase()
 
+  exclude = if opts.exclude? then opts.exclude else null
+
   # cache keys array, helpful for length and such, we'll use it to validate
   # proper cache objects later on
   
@@ -39,10 +41,10 @@ crudify = (store, req, cache, fn) ->
 
   # uses `Schema` extension, wee.
   if req.body? and keys.length > 0
-    if cache.maxAge? 
-      body = new Schema _.extend req.body, {stale: cache.maxAge, store: cache.store} 
+    if opts.cache? and opts.cache.maxAge? 
+      body = new Schema _.extend req.body, {stale: opts.cache.maxAge, store: opts.cache.store} 
     else 
-      body = new Schema _.extend req.body, {stale: null, store: cache.store}
+      body = new Schema _.extend req.body, {stale: null, store: opts.cache.store}
 
   # on `post` & `put` requests, don't pass go with a null body
   if (method == "post" or method == "put") and body == null 
@@ -59,11 +61,19 @@ crudify = (store, req, cache, fn) ->
     # do our switch, a lot easier this way -- yea
     switch method
 
-
       # handle "GET" requests
       # `ds.query` is used
       when "get" then methodHandler.get query, (err, datastores) ->
         return if err? then fn err, null
+
+        if exclude.length > 0
+          keys = Object.keys datastores
+          _.each exclude, (element, index, list) ->
+            for k in [0..keys.length]
+              do (k) ->
+                cur = datastores[k]
+                if datastores.indexOf(cur) != -1
+                  delete datastores[k][element]
 
         # build out our skip query
         if skip?
