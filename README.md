@@ -13,6 +13,9 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 - flexible
 
 ### Installation (w/ Express)
+
+`npm install git+https://github.com/dhigginbotham/rest-nedb-cache --save`
+
 ```cs
   express = require "express"
   app = module.exports = express()
