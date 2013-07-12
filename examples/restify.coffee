@@ -5,7 +5,7 @@
 express = require "express"
 app = module.exports = express()
 
-nedb = require "restify-nedb"
+nedb = require("restify-nedb").mount
 ensure = require "../passport/middleware"
 
 new nedb {
