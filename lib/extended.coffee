@@ -17,22 +17,23 @@ extended = (ds) ->
 
   @
 
-
 # Schema takes opts, and you can really extend that to as large as you'd like
 # I'll play with making this more accessible to everyone.
 extended::Schema = (opts) ->
 
   stale = 1000 * 60 * 60
   
-  @store = undefined
+  # @store = undefined
   @stale = stale
   
   garbageCollection = (stale) ->
     ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err) ->
       return if err? then console.log err
 
-  if opts? then _.extend @, opts
+  @store = undefined
   
+  if opts? then _.extend @, opts
+
   self = @
 
   if @stale?
@@ -40,7 +41,9 @@ extended::Schema = (opts) ->
       garbageCollection self.stale
     , self.stale
 
-  @stale = Date.now() + self.stale
+    @stale = Date.now() + self.stale
+  else
+    @stale = undefined
 
   @
 
