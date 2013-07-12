@@ -16,16 +16,18 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 
 `npm install git+https://github.com/dhigginbotham/rest-nedb-cache --save`
 
-```cs
+```coffee
   express = require "express"
   app = module.exports = express()
-  
+
   nedb = require "rest-nedb-cache"
   ensure = require "../passport/middleware"
-  
+
   new nedb {
     prefix: "/session"
     middleware: [ensure.admins]
+    cache: 
+      maxAge: 1000 * 60 * 60
   }, app
 ```
 
