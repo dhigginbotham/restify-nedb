@@ -1,7 +1,7 @@
 rest-nedb-cache
 ===============
 
-This is still very early in dev, it works -- but I am still optimizing things, if you find any issues you know what to do :)
+### Heads up! This is still very early in dev, it works, I just haven't extended many of the subset mongo api given by `nedb`
 
 This module will give you a simple file/memory based cache with [nedb](https://github.com/louischatriot/nedb). (ps, i love nedb, you should too.)
 
@@ -23,6 +23,8 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 
 ### Usage
 I would recommend using [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
+
+##### Basic
 ```
 GET http://localhost:3000/session/v1
 GET http://localhost:3000/session/v1/:id
@@ -31,3 +33,8 @@ PUT http://localhost:3000/session/v1/:id
 DELETE http://localhost:3000/session/v1/:id
 ```
 
+##### Extended
+`append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
+```
+PUT http://localhost:3000/session/v1/:id?append=true
+```
