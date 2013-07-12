@@ -36,12 +36,19 @@ crudify = (store, req, cache, fn) ->
 
   # uses `Schema` extension, wee.
   if req.body? and keys.length > 0
+<<<<<<< HEAD
     body = if cache? and cache.gc == true 
       new Schema _.extend req.body, {stale: cache.maxAge, store: cache.store} 
     else 
       new Schema _.extend req.body, {stale: null, store: cache.store}
       # stale: 1000 * 60 * 60 # defaulted settings
       # store: req.url # defaulted settings
+=======
+    if cache.maxAge? 
+      body = new Schema _.extend req.body, {stale: cache.maxAge, store: cache.store} 
+    else 
+      body = new Schema _.extend req.body, {stale: null, store: cache.store}
+>>>>>>> newest
 
   # on `post` & `put` requests, don't pass go with a null body
   if (method == "post" or method == "put") and body == null 
