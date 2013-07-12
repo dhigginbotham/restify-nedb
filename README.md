@@ -34,9 +34,6 @@ restify-nedb was built to give you restful api resources for client side applica
 ```
 ----
 
-##### Usage
-I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
-
 ##### Settings
 - `prefix` defaults to `/ds`
 - `version` defaults to `/v1`
@@ -49,25 +46,31 @@ I would recommend using something like [Advanced REST Client](https://chrome.goo
 - `ds` not recommended to overwrite, but you have access if you need it..
 - `global` key name, defaults to `undefined` (experiemental, may not make the cut)
 
-##### Basic
+## Routes
+
 ```
 GET http://localhost:3000/session/v1
-GET http://localhost:3000/session/v1/:id
 POST http://localhost:3000/session/v1
+
+GET http://localhost:3000/session/v1/:id
 PUT http://localhost:3000/session/v1/:id
 DELETE http://localhost:3000/session/v1/:id
 ```
 
-##### Options
-- `append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
+### Ordering
 
-```
-PUT http://localhost:3000/session/v1/:id?append=true
+```md
 GET http://localhost:3000/session/v1/:id?limit=20
 GET http://localhost:3000/session/v1/:id?skip=10
 GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 ```
 
+### Additional
+`PUT http://localhost:3000/session/v1/:id?append=true`
+- `append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
+
+##### Pro-tip
+I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
 
 ## License
 ```md
