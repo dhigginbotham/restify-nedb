@@ -65,6 +65,7 @@ DELETE http://localhost:3000/session/v1/:id
 PUT http://localhost:3000/session/v1/:id?append=true
 GET http://localhost:3000/session/v1/:id?limit=20
 GET http://localhost:3000/session/v1/:id?skip=10
+GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 ```
 
 
