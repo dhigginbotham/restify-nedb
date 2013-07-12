@@ -30,6 +30,7 @@ This module will give you a simple file/memory based cache with [nedb](https://g
       maxAge: 1000 * 60 * 60
   }, app
 ```
+----
 
 ##### Usage
 I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 

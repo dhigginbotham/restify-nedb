@@ -1,3 +1,7 @@
+### Examples Usage ###
+# copy & paste this into your express app directory and 
+# include it like we have in `app.coffee`
+
 express = require "express"
 app = module.exports = express()
 
