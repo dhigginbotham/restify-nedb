@@ -1,9 +1,9 @@
 restify-nedb (for [nedb](https://github.com/louischatriot/nedb))
 ===============
 
-This module will give you a simple file/memory based cache with [nedb](https://github.com/louischatriot/nedb). (ps, i love nedb, you should too.) If you haven't already checked it out, maybe you want to use it separately of all of this extra stuff, I'd recommend it. It's like sqlite, with a subset of mongodb's api. Really neat.
+restify-nedb was built to give you restful api resources for client side application frameworks like angular.js, ember.js, backbone.js and knockout.js also module will give you a simple file/memory based cache utilizing [nedb](https://github.com/louischatriot/nedb). (ps, i love nedb, you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. Really neat.
 
-Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way!
+Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way :neckbeard:
 
 ### Features
 - Super fast `nedb` file/memory backed cache w/ simple garbage collection
