@@ -29,8 +29,16 @@ This module will give you a simple file/memory based cache with [nedb](https://g
   }, app
 ```
 
-### Usage
+##### Usage
 I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
+
+##### Settings
+- `prefix` defaults to `/ds`
+- `version` defaults to `/v1`
+- `middleware` array of middleware, defaults to `[]`
+- `memory_store` defaults to false
+- `file_name` defaults to `nedb-filestore.db`
+- `file_path` defaults to `../db`
 
 ##### Basic
 ```
@@ -41,8 +49,9 @@ PUT http://localhost:3000/session/v1/:id
 DELETE http://localhost:3000/session/v1/:id
 ```
 
-##### Extended
-`append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
-```
-PUT http://localhost:3000/session/v1/:id?append=true
-```
+##### Options
+- `append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
+    ```
+    PUT http://localhost:3000/session/v1/:id?append=true
+    ```
+
