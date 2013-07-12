@@ -26,10 +26,6 @@ module.exports = (opts, app) ->
 
   @cache = {}
   @cache.store = undefined
-<<<<<<< HEAD
-  @cache.gc = true
-=======
->>>>>>> newest
   @cache.maxAge = 1000 * 60 * 60
   
   if @memory_store == false
@@ -38,11 +34,7 @@ module.exports = (opts, app) ->
     @ds = new DataStore() 
 
   @middleware = []
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> newest
   if opts? then _.extend @, opts
   if opts.cache? then _.extend @cache, opts.cache
 

@@ -1,9 +1,5 @@
 _ = require "underscore"
 
-<<<<<<< HEAD
-
-=======
->>>>>>> newest
 # extend nedb to give us a Schema we can generate easily with a stale timestamp
 # this will allow us to do a very simpe garbage collection for these `temporary`
 # objects

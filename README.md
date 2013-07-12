@@ -40,7 +40,6 @@ I would recommend using something like [Advanced REST Client](https://chrome.goo
 - `file_name` defaults to `nedb-filestore.db`
 - `file_path` defaults to `../db`
 - `cache.store` defaults to `undefined` set a store name
-- `cache.gc` (Garbage Collection) defaults to true 
 - `cache.maxAge` defaults to 1hour or `1000 * 60 * 60`
 - `ds` not recommended to overwrite, but you have access if you need it..
 
