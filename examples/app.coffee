@@ -24,11 +24,9 @@ if process.env.NODE_ENV == "development"
 app.use express.favicon()
 
 # Form Handling, MethodOverride, bodyParser
-# cookieparser, etc..
 app.use express.methodOverride()
 app.use express.bodyParser 
   keepExtensions: true
-app.use express.cookieParser()
 
 # we're going to mount the application to our 
 # express app, modular style.

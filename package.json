@@ -1,7 +1,8 @@
 {
   "name": "restify-nedb",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "simple to use nedb cache layer with restful api routing",
+  "keywords": ["nedb", "coffeescript", "express", "rest", "api", "router", "garbage collection"],
   "main": "lib/index.coffee",
   "author": {
     "name": "David Higginbotham",
@@ -14,5 +15,13 @@
   },
   "devDependencies": {
     "coffee-script": ">= 1.3.3"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "bugs": "https://github.com/dhigginbotham/restify-nedb/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dhigginbotham/restify-nedb.git"
   }
 }
