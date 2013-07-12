@@ -12,7 +12,6 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 - parses json/multi-part
 - flexible
 
-
 ### Installation
 ```cs
   nedb = require "rest-nedb-cache"
@@ -22,4 +21,13 @@ This module will give you a simple file/memory based cache with [nedb](https://g
   }, app
 ```
 
+### Usage
+I would recommend using [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
+```
+GET http://localhost:3000/session/v1
+GET http://localhost:3000/session/v1/:id
+POST http://localhost:3000/session/v1
+PUT http://localhost:3000/session/v1/:id
+DELETE http://localhost:3000/session/v1/:id
+```
 
