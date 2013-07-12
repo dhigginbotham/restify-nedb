@@ -36,9 +36,6 @@ module.exports = (opts, app) ->
   @middleware = []
 
   if opts? then _.extend @, opts
-  if opts.cache? then _.extend @cache, opts.cache
-
-  # if opts.gc? then @cache.enabled = gc
 
   # define our route uri w/ version, etc
   uri = util.format if @version? then @prefix + @version else @prefix
@@ -65,3 +62,5 @@ module.exports = (opts, app) ->
 
   # set our app to listen for :id
   app.all uri + "/:id", router
+
+  @
