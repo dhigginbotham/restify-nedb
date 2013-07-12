@@ -1,7 +1,7 @@
-rest-nedb-cache
+rest-nedb-cache (for [nedb](https://github.com/louischatriot/nedb))
 ===============
 
-### Heads up! This is still very early in dev, it works, I just haven't extended many of the subset mongo api given by `nedb`
+### Heads up! This is still very early in dev, it works, I just haven't extended many of the subset mongo api given by [`nedb`](https://github.com/louischatriot/nedb)
 
 This module will give you a simple file/memory based cache with [nedb](https://github.com/louischatriot/nedb). (ps, i love nedb, you should too.)
 
