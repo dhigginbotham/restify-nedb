@@ -1,7 +1,7 @@
 express = require "express"
 app = module.exports = express()
 
-nedb = require "rest-nedb-cache"
+nedb = require "restify-nedb"
 ensure = require "../passport/middleware"
 
 new nedb {
