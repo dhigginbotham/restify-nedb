@@ -1,5 +1,9 @@
 _ = require "underscore"
 
+
+# extend nedb to give us a Schema we can generate easily with a stale timestamp
+# this will allow us to do a very simpe garbage collection for these `temporary`
+# objects
 extended = (ds) ->
 
   _.extend @, ds
@@ -13,6 +17,9 @@ extended = (ds) ->
 
   @
 
+
+# Schema takes opts, and you can really extend that to as large as you'd like
+# I'll play with making this more accessible to everyone.
 extended::Schema = (opts) ->
 
   stale = 1000 * 60 * 60
@@ -32,8 +39,6 @@ extended::Schema = (opts) ->
     setTimeout ->
       garbageCollection self.stale
     , self.stale
-
-  else garbageCollection self.stale
 
   @stale = Date.now() + self.stale
 
