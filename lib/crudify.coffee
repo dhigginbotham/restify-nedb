@@ -4,14 +4,15 @@
 # underscores is amazing, we'll be using this a lot.
 _ = require "underscore"
 
+extendify = require "./extended"
+
 # require your nedb installation
 ds = null
 # crudify switch, will handle all acceptable routes and pass json errors
 # on unsupported request methods.
 crudify = (store, req, fn) ->
 
-  st = require "./extended"
-  ds = new st store
+  ds = new extendify store
   Schema = ds.Schema
 
   # listen for `req.param('id')` will fallback until it finds the id
