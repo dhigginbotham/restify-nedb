@@ -63,6 +63,7 @@ DELETE http://localhost:3000/session/v1/:id
 
 ```
 PUT http://localhost:3000/session/v1/:id?append=true
+PUT http://localhost:3000/session/v1/:id?limit=20
 ```
 
 

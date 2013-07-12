@@ -24,16 +24,20 @@ extended::Schema = (opts) ->
   
   @stale = stale
   
+  # garbage collection, grabs whatevers stale and removes them, iniatialized on
+  # cache schema creation
   garbageCollection = (stale) ->
     ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err) ->
       return if err? then console.log err
 
+  # define store as undefined, so only if we set it will it get taken care of
   @store = undefined
   
   if opts? then _.extend @, opts
 
   self = @
 
+  # check for stale, that means we gotta do some cleanup!
   if @stale?
     setTimeout ->
       garbageCollection self.stale
@@ -41,6 +45,7 @@ extended::Schema = (opts) ->
 
     @stale = Date.now() + self.stale
   else
+    # no stale, no cache, permanent.
     @stale = undefined
 
   @
