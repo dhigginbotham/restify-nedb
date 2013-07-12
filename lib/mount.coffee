@@ -29,6 +29,7 @@ module.exports = (opts, app) ->
   @cache.maxAge = 1000 * 60 * 60
 
   @middleware = []
+  @exclude = []
 
   if opts? then _.extend @, opts
   
@@ -39,8 +40,6 @@ module.exports = (opts, app) ->
 
   # define our route uri w/ version, etc
   uri = util.format if @version? then @prefix + @version else @prefix
-
-  @exclude = []
 
   self = @
 
