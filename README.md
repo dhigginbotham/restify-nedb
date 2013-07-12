@@ -12,17 +12,22 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 - parses json/multi-part
 - flexible
 
-### Installation
+### Installation (w/ Express)
 ```cs
+  express = require "express"
+  app = module.exports = express()
+  
   nedb = require "rest-nedb-cache"
+  ensure = require "../passport/middleware"
+  
   new nedb {
     prefix: "/session"
-    version: "/v1"
+    middleware: [ensure.admins]
   }, app
 ```
 
 ### Usage
-I would recommend using [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
+I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
 
 ##### Basic
 ```
