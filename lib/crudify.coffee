@@ -10,7 +10,7 @@ extendify = require "./extended"
 ds = null
 # crudify switch, will handle all acceptable routes and pass json errors
 # on unsupported request methods.
-crudify = (store, req, fn) ->
+crudify = (store, req, cache, fn) ->
 
   ds = new extendify store
   Schema = ds.Schema
@@ -27,6 +27,7 @@ crudify = (store, req, fn) ->
 
   # cache keys array, helpful for length and such, we'll use it to validate
   # proper cache objects later on
+  
   keys = Object.keys req.body
 
   # if the bodyParser has an object, we're going to create a schema
@@ -35,7 +36,10 @@ crudify = (store, req, fn) ->
 
   # uses `Schema` extension, wee.
   if req.body? and keys.length > 0
-    body = new Schema req.body
+    body = if cache? and cache.gc == true 
+      new Schema _.extend req.body, {stale: cache.maxAge, store: cache.store} 
+    else 
+      new Schema _.extend req.body, {stale: null, store: cache.store}
       # stale: 1000 * 60 * 60 # defaulted settings
       # store: req.url # defaulted settings
 
