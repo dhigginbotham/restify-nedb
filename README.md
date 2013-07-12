@@ -3,8 +3,8 @@ restify-nedb (for [nedb](https://github.com/louischatriot/nedb))
 
 restify-nedb was built to give you restful api resources for client side application frameworks like `angular.js`, `ember.js`, `backbone.js` or `knockout.js` as well as give you a simple file/memory based cache utilizing [nedb](https://github.com/louischatriot/nedb). (ps, i love nedb, you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. Really neat.
 
-- Let me know if you have any issues, please open issues/prs etc, 
-it's a lot more fun that way
+- Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way
+- There's still a good chunk of the `nedb` api I need to wrap in, if you need the core crud stuff, this should work well for you
 
 ----
 
