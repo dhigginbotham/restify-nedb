@@ -8,7 +8,7 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 ### Features
 - Super fast `nedb` file/memory backed cache w/ simple garbage collection
 - 100% coffeescript, hate it or love it
-- restful api routing supporting "GET", "POST", "PUT", "DELETE" requests
+- restful routing: `"GET", "POST", "PUT", "DELETE"` 
 - parses json/multi-part
 - flexible
 
