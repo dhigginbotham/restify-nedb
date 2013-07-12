@@ -23,6 +23,7 @@ crudify = (store, req, cache, fn) ->
   append = if req.query? and req.query.append? then true else false
 
   limit = if req.param("limit")? then req.param("limit") else null
+  skip = if req.param("skip")? then req.param("skip") else null
 
   # do our switch stuff based on this variable
   method = req.method.toLowerCase()
@@ -57,23 +58,33 @@ crudify = (store, req, cache, fn) ->
 
     # do our switch, a lot easier this way -- yea
     switch method
+
+
       # handle "GET" requests
       # `ds.query` is used
       when "get" then methodHandler.get query, (err, datastores) ->
         return if err? then fn err, null
 
+        # build out our skip query
+        if skip?
+          skipped = new Array()
+          for x in [(skip - 1)..(limit || datastores.length) - 1]
+            do (x) ->
+              skipped.push datastores[x]
+
+          return fn null, skipped
+
         # check for limit, if it exists -- we're going to 
         # support a limit
 
-        if limit?
-          limited = []
+        if limit? and not skip?
+          limited = new Array()
           for x in [0..(limit - 1)]
             do (x) ->
               limited.push datastores[x]
-          
-          fn null, limited
-        else
-          fn null, datastores
+          return fn null, limited
+
+        else fn null, datastores
 
       # handle "POST" requests
       # `ds.insert` is used
