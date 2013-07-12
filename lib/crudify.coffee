@@ -22,6 +22,8 @@ crudify = (store, req, cache, fn) ->
   # object with its original contents, plus any new content
   append = if req.query? and req.query.append? then true else false
 
+  limit = if req.param("limit")? then req.param("limit") else null
+
   # do our switch stuff based on this variable
   method = req.method.toLowerCase()
 
@@ -59,7 +61,19 @@ crudify = (store, req, cache, fn) ->
       # `ds.query` is used
       when "get" then methodHandler.get query, (err, datastores) ->
         return if err? then fn err, null
-        fn null, datastores
+
+        # check for limit, if it exists -- we're going to 
+        # support a limit
+
+        if limit?
+          limited = []
+          for x in [0..(limit - 1)]
+            do (x) ->
+              limited.push datastores[x]
+          
+          fn null, limited
+        else
+          fn null, datastores
 
       # handle "POST" requests
       # `ds.insert` is used
