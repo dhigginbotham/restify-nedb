@@ -67,7 +67,7 @@ GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 
 ### Additional
 `PUT http://localhost:3000/session/v1/:id?append=true`
-- `append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
+- `append` defaults to `false`. Set to `true` to do something similar to `findOrUpdate`
 
 ##### Pro-tip
 I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
