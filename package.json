@@ -1,5 +1,5 @@
 {
-  "name": "rest-nedb-cache",
+  "name": "restify-nedb",
   "version": "0.0.1",
   "description": "simple to use nedb cache layer with restful api routing",
   "main": "lib/index.coffee",
