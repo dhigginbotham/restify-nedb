@@ -14,7 +14,7 @@ This module will give you a simple file/memory based cache with [nedb](https://g
 
 ### Installation (w/ Express)
 
-`npm install git+https://github.com/dhigginbotham/rest-nedb-cache --save`
+`npm install git+https://github.com/dhigginbotham/restify-nedb --save`
 
 ```coffee
   express = require "express"
