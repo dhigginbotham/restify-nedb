@@ -16,7 +16,7 @@ it's a lot more fun that way
 
 ### Installation (w/ Express)
 
-`npm install git+https://github.com/dhigginbotham/restify-nedb --save`
+`npm install restify-nedb --save`
 
 ```coffee
   express = require "express"
