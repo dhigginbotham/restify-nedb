@@ -37,16 +37,17 @@ module.exports = (opts, app) ->
   else
     @ds = new DataStore()
 
-
   # define our route uri w/ version, etc
   uri = util.format if @version? then @prefix + @version else @prefix
+
+  @exclude = []
 
   self = @
 
   # router, output either our errors or a successful response.
   router = (req, res) ->
-    crudify self.ds, req, self.cache, (err, resp) ->
-      if err? 
+    crudify self, req, (err, resp) ->
+      if err?
         res.status 400 # throw a bad request out there..
         res.send err # send that error baby :/
       else
@@ -63,8 +64,5 @@ module.exports = (opts, app) ->
 
   # set our app to listen for :id
   app.all uri + "/:id", router
-
-  if @global?
-    global[@global] = @ds
 
   @

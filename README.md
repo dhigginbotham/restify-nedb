@@ -45,7 +45,6 @@ new nedb {
 - `file_path` defaults to `../db`
 - `cache.store` defaults to `undefined` set a store name
 - `cache.maxAge` defaults to 1hour or `1000 * 60 * 60`
-- `global` key name, defaults to `undefined` (experiemental, may not make the cut)
 
 ## Routes
 

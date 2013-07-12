@@ -10,7 +10,7 @@ extendify = require "./extended"
 ds = null
 # crudify switch, will handle all acceptable routes and pass json errors
 # on unsupported request methods.
-crudify = (opts, store, req, cache, fn) ->
+crudify = (opts, req, fn) ->
 
   ds = new extendify opts.ds
   Schema = ds.Schema
