@@ -35,7 +35,7 @@ new nedb {
 ```
 ----
 
-##### Settings
+## Settings
 - `prefix` defaults to `/ds`
 - `version` defaults to `/v1`
 - `exclude` defaults to `[]` (showing all)
@@ -45,7 +45,6 @@ new nedb {
 - `file_path` defaults to `../db`
 - `cache.store` defaults to `undefined` set a store name
 - `cache.maxAge` defaults to 1hour or `1000 * 60 * 60`
-- `ds` not recommended to overwrite, but you have access if you need it..
 - `global` key name, defaults to `undefined` (experiemental, may not make the cut)
 
 ## Routes
@@ -76,7 +75,7 @@ append defaults to false. Set to true to do something similar to findOrUpdate
 ```
 
 ##### Pro-tip
-I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
+I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help.
 
 ## License
 ```md
