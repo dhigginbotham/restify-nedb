@@ -37,8 +37,6 @@ module.exports = (opts, app) ->
   else
     @ds = new DataStore()
 
-  if @global?
-    global[@global] = @ds
 
   # define our route uri w/ version, etc
   uri = util.format if @version? then @prefix + @version else @prefix
@@ -65,5 +63,8 @@ module.exports = (opts, app) ->
 
   # set our app to listen for :id
   app.all uri + "/:id", router
+
+  if @global?
+    global[@global] = @ds
 
   @

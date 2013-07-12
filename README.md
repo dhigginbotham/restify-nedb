@@ -47,6 +47,7 @@ I would recommend using something like [Advanced REST Client](https://chrome.goo
 - `cache.store` defaults to `undefined` set a store name
 - `cache.maxAge` defaults to 1hour or `1000 * 60 * 60`
 - `ds` not recommended to overwrite, but you have access if you need it..
+- `global` key name, defaults to `undefined` (experiemental, may not make the cut)
 
 ##### Basic
 ```

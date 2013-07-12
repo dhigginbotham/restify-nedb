@@ -79,9 +79,15 @@ crudify = (store, req, cache, fn) ->
         return if err? then fn err, null
         fn null, deleted
 
+      # handle "HEAD" requests
+      # `ds.remove` is used
+      when "head" then methodHandler.head query, (err, header) ->
+        return if err? then fn err, null
+        fn null, header
+
       # do error on unsupported requests
       else 
-        fn error: "Unsupported http method please try again.", null
+        fn error: "Unsupported http method, please try again.", null
 
 methodHandler = {}
 
@@ -112,6 +118,9 @@ methodHandler.delete = (query, fn) ->
       fn null, resp
     else
       fn error: "No items deleted, please check your id", null
+
+methodHandler.head = (query, fn) ->
+  return fn {error: "Unsupported http method, please try again", query: query}, null
 
 methodHandler.put = (query, update, append, fn) ->
 
