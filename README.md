@@ -48,7 +48,7 @@ restify-nedb was built to give you restful api resources for client side applica
 
 ## Routes
 
-```
+```md
 GET http://localhost:3000/session/v1
 POST http://localhost:3000/session/v1
 
@@ -66,8 +66,12 @@ GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 ```
 
 ### Additional
-`PUT http://localhost:3000/session/v1/:id?append=true`
-- `append` defaults to `false`. Set to `true` to do something similar to `findOrUpdate`
+
+```md
+PUT http://localhost:3000/session/v1/:id?append=true
+
+append defaults to false. Set to true to do something similar to findOrUpdate
+```
 
 ##### Pro-tip
 I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help. 
