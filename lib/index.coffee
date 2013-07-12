@@ -1,6 +1,3 @@
-# express = require "express"
-# app = module.exports = express()
-
 util = require "util"
 _ = require "underscore"
 path = require "path"
@@ -30,6 +27,8 @@ module.exports = (opts, app) ->
   else
     @ds = new DataStore() 
 
+  @middleware = []
+
   if opts? then _.extend @, opts
 
   # define our route uri w/ version, etc
@@ -48,6 +47,11 @@ module.exports = (opts, app) ->
 
   # set app to listen for all router paths
   # will fallback to `req.query` and `req.body`
+  if @middleware.length > 0
+    for mid in @middleware
+      app.all @uri, mid
+      app.all @uri + "/:id", mid
+
   app.all @uri, router
 
   # set our app to listen for :id
