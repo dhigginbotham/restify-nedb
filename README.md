@@ -39,6 +39,10 @@ I would recommend using something like [Advanced REST Client](https://chrome.goo
 - `memory_store` defaults to false
 - `file_name` defaults to `nedb-filestore.db`
 - `file_path` defaults to `../db`
+- `cache.store` defaults to `undefined` set a store name
+- `cache.gc` (Garbage Collection) defaults to true 
+- `cache.maxAge` defaults to 1hour or `1000 * 60 * 60`
+- `ds` not recommended to overwrite, but you have access if you need it..
 
 ##### Basic
 ```
@@ -51,7 +55,7 @@ DELETE http://localhost:3000/session/v1/:id
 
 ##### Options
 - `append` is a Boolean option, if append is `true` your update appends to the collection, however if it is `false` it will overwrite everything in that doc
-    ```
-    PUT http://localhost:3000/session/v1/:id?append=true
-    ```
 
+```
+PUT http://localhost:3000/session/v1/:id?append=true
+```
