@@ -10,7 +10,6 @@
   "dependencies": {
     "express": "latest",
     "restify-nedb": "git+https://github.com/dhigginbotham/restify-nedb.git"
-    
   },
   "devDependencies": {
     "coffee-script": ">= 1.3.3"

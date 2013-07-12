@@ -1,5 +1,6 @@
 ### Examples Usage ###
 # copy & paste this into your express app.coffee
+# then run `npm install && coffee app.coffee
 
 express = require "express"
 app = express()
