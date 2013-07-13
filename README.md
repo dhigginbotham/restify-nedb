@@ -88,10 +88,13 @@ GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 PUT http://localhost:3000/session/v1/:id?append=true
 ```
 - append defaults to false. Set to true to do something similar to findOrUpdate
+ 
 ```md
 POST http://localhost:3000/session/v1
 ```
+
 - `_stale` in your body/json will act as an override to `stale`, say you need some things to last longer/shorter than other cached items
+ 
 ##### Tests
 
 ```md
