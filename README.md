@@ -1,8 +1,9 @@
-restify-nedb (for [nedb](https://github.com/louischatriot/nedb))
-===============
+# restify-nedb (for [nedb](https://github.com/louischatriot/nedb))
 
-restify-nedb was built to give you restful api resources for client side application frameworks like `angular.js`, `ember.js`, `backbone.js` or `knockout.js` as well as give you a simple file/memory based cache utilizing [nedb](https://github.com/louischatriot/nedb). (ps, i love nedb, you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. Really neat.
+`restify-nedb` was built to give you restful api resources for client side application frameworks like `angular.js`, `ember.js`, `backbone.js` or `knockout.js` as well as give you a simple file/memory based cache utilizing [nedb](https://github.com/louischatriot/nedb). (ps, i love [nedb](https://github.com/louischatriot/nedb), you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. _Really neat._
 
+
+### Heads up, she's still a baby
 - Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way
 - There's still a good chunk of the `nedb` api I need to wrap in, if you need the core crud stuff, this should work well for you
 - I'd like to point out there's a few rough parts, but it's coming along.  
@@ -11,14 +12,21 @@ restify-nedb was built to give you restful api resources for client side applica
 
 ### Features
 - Super fast `nedb` file/memory backed cache w/ simple garbage collection
-- 100% coffeescript, hate it or love it
+- 100% coffeescript, hate it or love it 
 - restful routing: `GET`, `POST`, `PUT`, `DELETE` 
 - parses `json/multi-part`
 
 ### Installation (w/ Express)
 
-`npm install restify-nedb --save`
+Step 1) Install the app, automatically add the latest version in your `package.json`
+```
+npm install restify-nedb --save
+```
 
+----
+
+
+Step 2) Configure your app, needs access to `app`, so you can do that a number of ways, `req.app`, `res.app`, `app.use`, `app`, etc..
 ```coffee
 express = require "express"
 app = module.exports = express()
@@ -34,18 +42,25 @@ new nedb {
     maxAge: 1000 * 60 * 60
 }, app
 ```
+
+----
+
+Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
+
 ----
 
 ## Settings
-- `prefix` defaults to `/ds`
-- `version` defaults to `/v1`
-- `exclude` defaults to `[]` (showing all)
-- `middleware` array of middleware, defaults to `[]`
-- `memory_store` defaults to false
-- `file_name` defaults to `nedb-filestore.db`
-- `file_path` defaults to `../db`
-- `cache.store` defaults to `undefined` set a store name
-- `cache.maxAge` defaults to 1hour or `1000 * 60 * 60`
+Options | Defaults | Type | Required? 
+--- | --- | --- | ---
+**prefix** | `/ds` | String | `not required`
+**version** | `/v1` | String | `not required`
+**exclude** | `[]` | Array | `not required`
+**middleware** | `[]` | Array | `not required`, always expects an array
+**memory_store** | `false` | Boolean | `not required`, if you set this to true you'll be using a memory cache and not a file based persistant cache
+**file_name** | `nedb-filestore.db` | String | `not required`
+**file_path** | `../db` | String | `not required`, bit easier to change the path and view the contents instead of digging through `node_modules`
+**cache.store** | `undefined` | String | `not required`, will be renamed soon
+**cache.maxAge** | `1000 * 60 * 60` | Number | `not required`, if set to `undefined` automated gc will be disabled
 
 ## Routes
 
@@ -56,8 +71,10 @@ POST http://localhost:3000/session/v1
 GET http://localhost:3000/session/v1/:id
 PUT http://localhost:3000/session/v1/:id
 DELETE http://localhost:3000/session/v1/:id
-```
 
+GET http://localhost:3000/session/v1?id=:id
+PUT http://localhost:3000/session/v1?id=:id
+```
 ### Ordering
 
 ```md
