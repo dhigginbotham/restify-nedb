@@ -22,12 +22,18 @@ crudify = (opts, req, fn) ->
   # object with its original contents, plus any new content
   append = if req.query? and req.query.append? then true else false
 
+
+  # `limit` accepts numbers, will limit the response amount 
+  # still pretty wip ~
   limit = if req.param("limit")? then req.param("limit") else null
+  # `skip` works currently, just not the best pattern -- `tired`.
   skip = if req.param("skip")? then req.param("skip") else null
 
   # do our switch stuff based on this variable
   method = req.method.toLowerCase()
 
+  # exclusions accepts `['some', 'arr']` probably needs some more 
+  # work.
   exclude = if opts.exclude? then opts.exclude else null
 
   # cache keys array, helpful for length and such, we'll use it to validate
