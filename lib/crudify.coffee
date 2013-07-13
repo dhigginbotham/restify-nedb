@@ -66,6 +66,10 @@ crudify = (opts, req, fn) ->
       when "get" then methodHandler.get query, (err, datastores) ->
         return if err? then fn err, null
 
+        ### Fix these !!! ###
+        # added these quickly for my project because I needed it,
+        # will splice through this stuff when I refactor this file (tomorrow?)
+
         if exclude.length > 0
           keys = Object.keys datastores
           _.each exclude, (element, index, list) ->

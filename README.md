@@ -5,14 +5,15 @@ restify-nedb was built to give you restful api resources for client side applica
 
 - Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way
 - There's still a good chunk of the `nedb` api I need to wrap in, if you need the core crud stuff, this should work well for you
+- I'd like to point out there's a few rough parts, but it's coming along.  
 
 ----
 
 ### Features
 - Super fast `nedb` file/memory backed cache w/ simple garbage collection
 - 100% coffeescript, hate it or love it
-- restful routing: `"GET", "POST", "PUT", "DELETE"` 
-- parses json/multi-part
+- restful routing: `GET`, `POST`, `PUT`, `DELETE` 
+- parses `json/multi-part`
 
 ### Installation (w/ Express)
 
