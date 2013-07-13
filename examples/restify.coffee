@@ -7,17 +7,8 @@ express = require "express"
 app = module.exports = express()
 
 nedb = require("restify-nedb").mount
-ensure = require "../passport/middleware"
 
 cfg = require "./config"
 
 cfg.ds (err, ds) ->
-
-  opts = 
-    prefix: "/session"
-    middleware: [ensure.admins]
-    ds: ds
-
-  merged = _.extend cfg, opts
-
-  api = new nedb merged, app
+  api = new nedb cfg, app

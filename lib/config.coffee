@@ -5,30 +5,46 @@ path = require "path"
 
 config = (opts) ->
 
-  # purposefully make this privatish for now
-  @file_name = "nedb-filestore.db"
-  @file_path = path.join __dirname, "..", "db"
-  @memory_store = false
+  ### set default opts ###
 
+  # default settings for restify server 
+  @prefix = "/ds"
+  @version = "/v1"
+  @middleware = []
+  @exclude = []
+
+  @memoryStore = false
+
+  # default settings for internal nedb process
+  @fileName = "nedb-filestore.db"
+  @filePath = path.join __dirname, "..", "db"
   @store = undefined
   @maxAge = 1000 * 60 * 60
 
-  self = @
-
   if opts? then _.extend @, opts
 
+  if @file_name? 
+    console.log "`file_name` is deprecated, please use `fileName` in your config file"
+    @fileName = @file_name
+  if @file_path?
+    console.log "`file_path` is deprecated, please use `filePath` in your config file"
+    @filePath = @file_path
+  if @memory_store?
+    console.log "`memory_store` is deprecated, please use `memoryStore` in your config file"
+    @memoryStore = @memory_store
+    
   @
 
 config::ds = (fn) ->
   
   self = @
   
-  if @memory_store == false
-    _.extend self, new DataStore filename: path.join self.file_path, self.file_name
+  if @memoryStore == false
+    @ds = new DataStore filename: path.join self.filePath, self.fileName
   else
-    _.extend self, new DataStore()
+    @ds = new DataStore()
 
-  fn null, @
+  fn null, @ds
 
 config::inherit = (opts) ->
   

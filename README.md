@@ -57,20 +57,17 @@ cfg.ds (err, ds) ->
 ## Express `app.use` Options
 Options | Defaults | Type | Required? 
 --- | --- | --- | ---
-**prefix** | `/ds` | String | `not required`
-**version** | `/v1` | String | `not required`
-**exclude** | `[]` | Array | `not required`
-**middleware** | `[]` | Array | `not required`, always expects an array
+**ds** | `internal` | DataStore | allow for outside nedb processes to be restified. tip: `config.ds()` returns a new DataStore with whatever your `opts` are set to, once it's fired it will internalize and share
+**prefix** | `/ds` | String | defines the first route path, for instance `http://localhost:3000/ds`
+**version** | `/v1` | String | not preferred, as a rule i feel these aren't the best idea for your api, last thing you want is fragmentation in your api
+**exclude** | `[]` | Array | excludes keys/values from the api, good for things like `password` 
+**middleware** | `[]` | Array | middlewares, ie passport authentication, logging, analytics
+**memoryStore** | `false` | Boolean | whether or not keep an in-memory store or a file based persistant store, defaults to `false`, we like persistant files.
+**fileName** | `nedb-filestore.db` | String | file name for your nedb filestore
+**filePath** | `../db` | String | bit easier to change the path and view the contents instead of digging through `node_modules`
+**maxAge** | `1000 * 60 * 60` | Number | if set to `null` or `false` automated gc will be disabled
 
-## Internal nedb resource options
-Options | Defaults | Type | Required? 
---- | --- | --- | ---
-**memory_store** | `false` | Boolean | `not required`, if you set this to true you'll be using a memory cache and not a file based persistant cache
-**file_name** | `nedb-filestore.db` | String | `not required`
-**file_path** | `../db` | String | `not required`, bit easier to change the path and view the contents instead of digging through `node_modules`
-**maxAge** | `1000 * 60 * 60` | Number | `not required`, if set to `undefined` automated gc will be disabled
-**store** | `undefined` | String | `not currently working`
-
+**store** | `undefined` | String | `not currently working` - will allow for multiple nedb collections, still working out the kinks.
 
 ## Routes
 

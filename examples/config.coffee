@@ -1,11 +1,13 @@
-cfg = require("restify-nedb").config
+nedbConfig = require("restify-nedb").config
 
 conf = require "../../conf"
 
 opts = 
-  file_path: conf.app.paths.cache
+  filePath: conf.app.paths.cache
   maxAge: 1000 * 60 * 60
+  prefix: "/session"
+  # middleware: [ensure.admins]
 
-nedbCfg = new cfg opts
+nedbCfg = new nedbConfig opts
 
 module.exports = nedbCfg

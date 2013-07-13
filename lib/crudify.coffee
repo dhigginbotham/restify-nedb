@@ -75,7 +75,7 @@ crudify = (opts, req, fn) ->
       when "get" then methodHandler.get query, (err, datastores) ->
         return if err? then fn err, null
 
-        ### Fix these !!! ###
+        ### @todo Fix these !!! ###
         # added these quickly for my project because I needed it,
         # will splice through this stuff when I refactor this file (tomorrow?)
 

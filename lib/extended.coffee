@@ -23,7 +23,6 @@ extended = (ds) ->
   @
 
 # Schema takes opts, and you can really extend that to as large as you'd like
-# I'll play with making this more accessible to everyone.
 extended::Schema = (opts) ->
 
   stale = 1000 * 60 * 60
@@ -40,7 +39,7 @@ extended::Schema = (opts) ->
 
   self = @
 
-  if @stale?
+  if @stale? or @stale != false
     setTimeout ->
       garbageCollection self.stale
     , self.stale
