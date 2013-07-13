@@ -95,6 +95,8 @@ crudify = (opts, req, fn) ->
           
           return fn null, limited
 
+        else fn null, datastores
+
       # handle "POST" requests
       # `ds.insert` is used
       when "post" then methodHandler.post body, (err, inserted) ->
