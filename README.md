@@ -5,7 +5,7 @@
 ### Heads up, she's still a baby
 - Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way
 - There's still a good chunk of the `nedb` api I need to wrap in, if you need the core crud stuff, this should work well for you
-- I'd like to point out there's a few rough parts, but it's coming along.  
+- I'd like to point out there coule be a few rough parts, but it's coming along.  
 
 ### Features
 - Super fast `nedb` file/memory backed cache w/ simple garbage collection

@@ -51,9 +51,9 @@ crudify = (opts, req, fn) ->
   # uses `Schema` extension, wee.
   if req.body? and keys.length > 0
     if opts.maxAge? 
-      body = new Schema _.extend req.body, {stale: opts.maxAge, store: opts.store} 
+      body = new Schema _.extend(req.body, {stale: opts.maxAge, store: opts.store}), ds
     else 
-      body = new Schema _.extend req.body, {stale: null, store: opts.store}
+      body = new Schema _.extend(req.body, {stale: null, store: opts.store}), ds
 
   # on `post` & `put` requests, don't pass go with a null body
   if (method == "post" or method == "put") and body == null 
