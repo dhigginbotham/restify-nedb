@@ -24,9 +24,8 @@ module.exports = (opts, app) ->
   @file_path = path.join __dirname, "..", "db"
   @memory_store = false
 
-  @cache = {}
-  @cache.store = undefined
-  @cache.maxAge = 1000 * 60 * 60
+  @store = undefined
+  @maxAge = 1000 * 60 * 60
 
   @middleware = []
   @exclude = []
