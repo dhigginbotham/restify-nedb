@@ -27,6 +27,7 @@ npm install restify-nedb --save
 express = require "express"
 app = module.exports = express()
 
+_ = require "underscore"
 nedb = require("restify-nedb").mount
 config = require("restify-nedb").config
 
@@ -60,8 +61,6 @@ Options | Defaults | Type | Required?
 **version** | `/v1` | String | `not required`
 **exclude** | `[]` | Array | `not required`
 **middleware** | `[]` | Array | `not required`, always expects an array
-
-----
 
 ## Internal nedb resource options
 Options | Defaults | Type | Required? 
