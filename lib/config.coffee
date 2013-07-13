@@ -1,3 +1,4 @@
+DataStore = require 'nedb'
 _ = require "underscore"
 fs = require "fs"
 path = require "path"
@@ -23,9 +24,9 @@ config::ds = (fn) ->
   self = @
   
   if @memory_store == false
-    @ds = _.extend self, new DataStore filename: path.join self.file_path, self.file_name
+    _.extend self, new DataStore filename: path.join self.file_path, self.file_name
   else
-    @ds = _.extend self, new DataStore()
+    _.extend self, new DataStore()
 
   fn null, @
 

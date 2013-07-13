@@ -33,26 +33,32 @@ ensure = require "../passport/middleware"
 new nedb {
   prefix: "/session"
   middleware: [ensure.admins]
-  excludes: ['_id', 'stale']
-  cache: 
-    maxAge: 1000 * 60 * 60
+  excludes: ['stale']
+  ds: ds
 }, app
 ```
 
 ##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
 
-## Settings
+## Express `app.use` Options
 Options | Defaults | Type | Required? 
 --- | --- | --- | ---
 **prefix** | `/ds` | String | `not required`
 **version** | `/v1` | String | `not required`
 **exclude** | `[]` | Array | `not required`
 **middleware** | `[]` | Array | `not required`, always expects an array
+
+## Internal nedb resource options
+- You can now load current or existing nedb setups
+
+Options | Defaults | Type | Required? 
+--- | --- | --- | ---
 **memory_store** | `false` | Boolean | `not required`, if you set this to true you'll be using a memory cache and not a file based persistant cache
 **file_name** | `nedb-filestore.db` | String | `not required`
 **file_path** | `../db` | String | `not required`, bit easier to change the path and view the contents instead of digging through `node_modules`
 **maxAge** | `1000 * 60 * 60` | Number | `not required`, if set to `undefined` automated gc will be disabled
 **store** | `undefined` | String | `not currently working`
+
 
 ## Routes
 

@@ -8,10 +8,13 @@ app = module.exports = express()
 nedb = require("restify-nedb").mount
 ensure = require "../passport/middleware"
 
-new nedb {
-  prefix: "/session"
-  middleware: [ensure.admins]
-  exclude: ['_id', 'stale']
-  cache: 
-    maxAge: 1000 * 60 * 60
-}, app
+cfg = require "./config"
+
+cfg.ds (err, ds) ->
+
+  opts = 
+    prefix: "/session"
+    middleware: [ensure.admins]
+    ds: ds
+
+  api = new nedb opts, app

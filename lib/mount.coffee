@@ -3,10 +3,10 @@
 
 util = require "util"
 _ = require "underscore"
-# path = require "path"
+path = require "path"
 
 # nedb file backed data store
-# DataStore = require 'nedb'
+DataStore = require 'nedb'
 crudify = require("./crudify")
 
 module.exports = (opts, app) ->
@@ -15,27 +15,12 @@ module.exports = (opts, app) ->
   
   # set default
   @prefix = "/ds"
-  
   # set default, remove with `null`
   @version = "/v1"
-
-  # purposefully make this privatish for now
-  @file_name = "nedb-filestore.db"
-  @file_path = path.join __dirname, "..", "db"
-  @memory_store = false
-
-  @store = undefined
-  @maxAge = 1000 * 60 * 60
-
   @middleware = []
   @exclude = []
 
   if opts? then _.extend @, opts
-  
-  if @memory_store == false
-    @ds = filename: path.join @file_path, @file_name
-  else
-    @ds = null
 
   # define our route uri w/ version, etc
   uri = util.format if @version? then @prefix + @version else @prefix

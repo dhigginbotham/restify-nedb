@@ -8,6 +8,7 @@ extendify = require "./extended"
 
 # require your nedb installation
 ds = null
+
 # crudify switch, will handle all acceptable routes and pass json errors
 # on unsupported request methods.
 crudify = (opts, req, fn) ->
