@@ -1,12 +1,8 @@
-# express = require "express"
-# app = module.exports = express()
-
-util = require "util"
 _ = require "underscore"
 path = require "path"
+util = require "util"
 
 # nedb file backed data store
-DataStore = require 'nedb'
 crudify = require("./crudify")
 
 module.exports = (opts, app) ->

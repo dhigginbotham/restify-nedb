@@ -28,14 +28,27 @@ express = require "express"
 app = module.exports = express()
 
 nedb = require("restify-nedb").mount
+config = require("restify-nedb").config
+
 ensure = require "../passport/middleware"
 
-new nedb {
-  prefix: "/session"
-  middleware: [ensure.admins]
-  excludes: ['stale']
-  ds: ds
-}, app
+dsOpts = 
+  file_path: conf.app.paths.cache
+  maxAge: 1000 * 60 * 60
+
+cfg = new config dsOpts
+
+cfg.ds (err, ds) ->
+
+  mountOpts = 
+    prefix: "/session"
+    middleware: [ensure.admins]
+    ds: ds
+
+  merged = _.extend cfg, mountOpts
+
+  api = new nedb merged, app
+
 ```
 
 ##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
@@ -48,9 +61,9 @@ Options | Defaults | Type | Required?
 **exclude** | `[]` | Array | `not required`
 **middleware** | `[]` | Array | `not required`, always expects an array
 
-## Internal nedb resource options
-- You can now load current or existing nedb setups
+----
 
+## Internal nedb resource options
 Options | Defaults | Type | Required? 
 --- | --- | --- | ---
 **memory_store** | `false` | Boolean | `not required`, if you set this to true you'll be using a memory cache and not a file based persistant cache

@@ -2,6 +2,7 @@
 # copy & paste this into your express app directory and 
 # include it like we have in `app.coffee`
 
+_ = require "underscore"
 express = require "express"
 app = module.exports = express()
 
@@ -17,4 +18,6 @@ cfg.ds (err, ds) ->
     middleware: [ensure.admins]
     ds: ds
 
-  api = new nedb opts, app
+  merged = _.extend cfg, opts
+
+  api = new nedb merged, app
