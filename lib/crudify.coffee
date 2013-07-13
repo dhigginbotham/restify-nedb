@@ -92,9 +92,8 @@ crudify = (opts, req, fn) ->
           for x in [0..(limit - 1)]
             do (x) ->
               limited.push datastores[x]
+          
           return fn null, limited
-
-        else fn null, datastores
 
       # handle "POST" requests
       # `ds.insert` is used
