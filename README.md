@@ -27,35 +27,28 @@ npm install restify-nedb --save
 express = require "express"
 app = module.exports = express()
 
-_ = require "underscore"
 nedb = require("restify-nedb").mount
 config = require("restify-nedb").config
 
 ensure = require "../passport/middleware"
 
-dsOpts = 
-  file_path: conf.app.paths.cache
+opts = 
+  filePath: conf.app.paths.cache
   maxAge: 1000 * 60 * 60
+  prefix: "/session"
+  middleware: [ensure.admins]
 
-cfg = new config dsOpts
+cfg = new config opts
 
 cfg.ds (err, ds) ->
-
-  mountOpts = 
-    prefix: "/session"
-    middleware: [ensure.admins]
-    ds: ds
-
-  merged = _.extend cfg, mountOpts
-
-  api = new nedb merged, app
+  api = new nedb cfg, app
 
 ```
 
 ##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
 
 ## Express `app.use` Options
-Options | Defaults | Type | Required? 
+Options | Defaults | Type | Infos
 --- | --- | --- | ---
 **ds** | `internal` | DataStore | allow for outside nedb processes to be restified. tip: `config.ds()` returns a new DataStore with whatever your `opts` are set to, once it's fired it will internalize and share
 **prefix** | `/ds` | String | defines the first route path, for instance `http://localhost:3000/ds`
@@ -66,7 +59,6 @@ Options | Defaults | Type | Required?
 **fileName** | `nedb-filestore.db` | String | file name for your nedb filestore
 **filePath** | `../db` | String | bit easier to change the path and view the contents instead of digging through `node_modules`
 **maxAge** | `1000 * 60 * 60` | Number | if set to `null` or `false` automated gc will be disabled
-
 **store** | `undefined` | String | `not currently working` - will allow for multiple nedb collections, still working out the kinks.
 
 ## Routes
