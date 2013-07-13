@@ -84,3 +84,19 @@ describe "restify-nedb crud tests", () ->
         expect(json.num_deleted).to.be(1)
         expect(json._id).to.equal(_id)
         done()
+
+  describe "POST insert new test seed data with a `_stale` override", () ->
+    
+    it "should return a new item that matches our seed data", (done) ->
+
+      opts = {uri: "#{uri}/session/v1", form: {test: "test posting new object", _stale: 5000}, method: "post"}
+
+      request opts, (err, resp, body) ->
+        expect(err).to.be(null)
+        expect(resp.statusCode).to.eql(200)
+        expect(body).not.to.be(undefined)
+        json = JSON.parse body
+        _id = json._id
+        expect(_id).not.to.be(undefined)
+        expect(json.stale).not.to.be(undefined)
+        done()

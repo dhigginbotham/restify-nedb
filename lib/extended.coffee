@@ -10,7 +10,7 @@ extended = (ds) ->
     ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err, count) ->
       return if err? then fn err, null
       fn null, count
-      
+
   _.extend @, ds
 
   self = @
@@ -43,6 +43,13 @@ extended::Schema = (opts, ds) ->
   
   if opts? then _.extend @, opts
 
+  # check for override of `@stale`
+  if @_stale? 
+    @stale = @_stale
+    # clear this out w/ `undefined` so it doesn't get
+    # stored into the doc
+    @_stale = undefined 
+
   self = @
   
   if @stale? or @stale != false
@@ -51,7 +58,7 @@ extended::Schema = (opts, ds) ->
         return if err? then throw err else if count > 0 then console.log "removed #{count} items from cache"
     , self.stale
 
-    @stale = Date.now() + self.stale
+    @stale = Date.now() + parseInt self.stale
 
   else
     @stale = undefined
