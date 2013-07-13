@@ -97,8 +97,13 @@ GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 
 ```md
 PUT http://localhost:3000/session/v1/:id?append=true
+```
+- append defaults to false. Set to true to do something similar to findOrUpdate
 
-append defaults to false. Set to true to do something similar to findOrUpdate
+##### Tests
+
+```md
+mocha test\crud.coffee -R spec --compilers coffee:coffee-script
 ```
 
 ##### Pro-tip

@@ -2,6 +2,11 @@ request = require "request"
 expect = require "expect.js"
 _ = require "underscore"
 
+###########################################
+# run tests w/ mocha (npm install mocha -g)
+# mocha test\crud.coffee -R spec --compilers coffee:coffee-script
+###########################################
+
 uri = "http://localhost:3000"
 _id = null
 
@@ -37,7 +42,6 @@ describe "restify-nedb crud tests", () ->
 
   describe "PUT", () ->
     it "should update our test object without appending", (done) ->
-
       opts = {uri: "#{uri}/session/v1/#{_id}", form: {test: "test updating an object without appending"}, method: "put"}
 
       request opts, (err, resp, body) ->
@@ -78,4 +82,5 @@ describe "restify-nedb crud tests", () ->
         expect(body).not.to.be(undefined)
         json = JSON.parse body
         expect(json.num_deleted).to.be(1)
+        expect(json._id).to.equal(_id)
         done()
