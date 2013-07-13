@@ -13,6 +13,8 @@ ds = null
 crudify = (opts, req, fn) ->
 
   ds = new extendify opts.ds
+
+  # define schema
   Schema = ds.Schema
 
   # listen for `req.param('id')` will fallback until it finds the id
@@ -22,10 +24,10 @@ crudify = (opts, req, fn) ->
   # object with its original contents, plus any new content
   append = if req.query? and req.query.append? then true else false
 
-
   # `limit` accepts numbers, will limit the response amount 
-  # still pretty wip ~
+  # still pretty wip
   limit = if req.param("limit")? then req.param("limit") else null
+  
   # `skip` works currently, just not the best pattern -- `tired`.
   skip = if req.param("skip")? then req.param("skip") else null
 

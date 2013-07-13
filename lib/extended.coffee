@@ -6,13 +6,19 @@ _ = require "underscore"
 extended = (ds) ->
 
   _.extend @, ds
+
+  ds.loadDatabase (err) ->
+    return if err? then throw err
+    # run this once, because it's okay.
+    ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err, removed) ->
+      if removed > 0
+        console.log "NeDB: sent #{removed} items to garbarge collection"
   
-  setInterval ->
-    ds.loadDatabase (err) ->
-      ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err, removed) ->
-        if removed > 0
-          console.log "NeDB: sent #{removed} items to garbarge collection"
-  , 1000 * 60 * 60
+    setInterval ->
+        ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err, removed) ->
+          if removed > 0
+            console.log "NeDB: sent #{removed} items to garbarge collection"
+    , 1000 * 60 * 10 # setting this to ten minute increments should do the trick.
 
   @
 
@@ -26,7 +32,7 @@ extended::Schema = (opts) ->
   
   garbageCollection = (stale) ->
     ds.remove {stale: {$lt: Date.now()}}, {multi: true}, (err) ->
-      return if err? then console.log err
+      return if err? then throw err
 
   @store = undefined
   
