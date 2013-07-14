@@ -3,7 +3,6 @@
 
 # underscores is amazing, we'll be using this a lot.
 _ = require "underscore"
-qs = require "querystring"
 
 extendify = require "./extended"
 
@@ -95,10 +94,9 @@ crudify = (opts, req, fn) ->
           
           _.each exclude, (element, index, list) ->
             for k in [0..keys.length]
-              do (k) ->
-                cur = datastores[k]
-                if datastores.indexOf(cur) != -1
-                  delete datastores[k][element]
+              cur = datastores[k]
+              if datastores.indexOf(cur) != -1
+                delete datastores[k][element]
 
         # build out our skip query
         if skip? then queryHandler.skip skip, datastores, (err, skipped) ->
