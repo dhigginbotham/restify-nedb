@@ -79,7 +79,8 @@ PUT http://localhost:3000/session/v1?id=:id
 ```md
 GET http://localhost:3000/session/v1/:id?limit=20
 GET http://localhost:3000/session/v1/:id?skip=10
-GET http://localhost:3000/session/v1/:id?limit=20&skip=10
+GET http://localhost:3000/session/v1/:id?sort=val
+GET http://localhost:3000/session/v1/:id?sort=-val
 ```
 
 ### Query / Searching

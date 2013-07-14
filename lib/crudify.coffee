@@ -26,15 +26,17 @@ crudify = (opts, req, fn) ->
   append = if req.query? and req.query.append? then true else false
 
   # `limit` accepts numbers, will limit the response amount 
-  # still pretty wip
   limit = if req.param("limit")? then req.param("limit") else null
   
-  # `skip` works currently, just not the best pattern -- `tired`.
+  # `skip` works like a champ
   skip = if req.param("skip")? then req.param("skip") else null
+
+  # `sort` handles multiples, like a boss. accepts asc/desc ie: "val" "-val"
+  sort = if req.param("sort")? then req.param("sort") else null
 
   # define a list of protected querys to listen for and not do
   # searches with them
-  privates = ['skip', 'limit', 'append', 'id']
+  privates = ['skip', 'limit', 'append', 'id', 'sort']
 
   query = {}
 
@@ -98,6 +100,11 @@ crudify = (opts, req, fn) ->
               if datastores.indexOf(cur) != -1
                 delete datastores[k][element]
 
+
+        # build out sort options
+        if sort? then queryHandler.sort sort, datastores, (err, sorted) ->
+          datastores = sorted
+
         # build out our skip query
         if skip? then queryHandler.skip skip, datastores, (err, skipped) ->
           datastores = skipped
@@ -139,6 +146,15 @@ crudify = (opts, req, fn) ->
 
 queryHandler = {}
 
+dynamicSort = (property) ->
+  sortOrder = 1
+  if property[0] is "-"
+    sortOrder = -1
+    property = property.substr(1, property.length - 1)
+  (a, b) ->
+    result = (if (a[property] < b[property]) then -1 else (if (a[property] > b[property]) then 1 else 0))
+    result * sortOrder
+
 queryHandler.skip = (skip, data, fn) ->
   dataLen = data.length
   arr = data.splice(skip, (dataLen - parseInt(skip)))
@@ -150,8 +166,9 @@ queryHandler.limit = (limit, data, fn) ->
   return fn null, arr
 
 queryHandler.sort = (sort, data, fn) ->
-
-  return fn null, err
+  # thanks to [Ege Özcan's Stackoverflow Answer](http://stackoverflow.com/a/4760279/820066)
+    sorted = data.sort dynamicSort sort
+    fn null, sorted
 
 methodHandler = {}
 
