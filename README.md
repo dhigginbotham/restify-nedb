@@ -49,7 +49,7 @@ cfg.ds (err, ds) ->
 
 ##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
 
-## Express `app.use` Options
+## Configuration Options
 Options | Defaults | Type | Infos
 --- | --- | --- | ---
 **ds** | `internal` | DataStore | allow for outside nedb processes to be restified. tip: `config.ds()` returns a new DataStore with whatever your `opts` are set to, once it's fired it will internalize and share
