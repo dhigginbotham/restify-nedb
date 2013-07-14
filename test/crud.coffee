@@ -100,3 +100,23 @@ describe "restify-nedb crud tests", () ->
         expect(_id).not.to.be(undefined)
         expect(json.stale).not.to.be(undefined)
         done()
+
+  describe "Test ?limit=5", () ->
+    it "should respond with a length of 5", (done) ->
+      request uri + "/session/v1?limit=5", (err, resp, body) ->
+        expect(err).to.be(null)
+        expect(resp.statusCode).to.eql(200)
+        expect(body).not.to.be(undefined)
+        json = JSON.parse body
+        expect(json.length).to.be(5)
+        done()
+
+  describe "Test ?limit=5&skip=5", () ->
+    it "should skip the first 5", (done) ->
+      request uri + "/session/v1?limit=5&skip=5", (err, resp, body) ->
+        expect(err).to.be(null)
+        expect(resp.statusCode).to.eql(200)
+        expect(body).not.to.be(undefined)
+        json = JSON.parse body
+        expect(json.length).to.be(5)
+        done()

@@ -80,7 +80,9 @@ crudify = (opts, req, fn) ->
         # will splice through this stuff when I refactor this file (tomorrow?)
 
         if exclude.length > 0
+
           keys = Object.keys datastores
+          
           _.each exclude, (element, index, list) ->
             for k in [0..keys.length]
               do (k) ->
@@ -89,26 +91,15 @@ crudify = (opts, req, fn) ->
                   delete datastores[k][element]
 
         # build out our skip query
-        if skip?
-          skipped = new Array()
-          for x in [(skip - 1)..(limit || datastores.length) - 1]
-            do (x) ->
-              skipped.push datastores[x]
-
-          return fn null, skipped
+        if skip? then queryHandler.skip skip, datastores, (err, skipped) ->
+          datastores = skipped
 
         # check for limit, if it exists -- we're going to 
         # support a limit
+        if limit? then queryHandler.limit limit, datastores, (err, limited) ->
+          datastores = limited
 
-        if limit? and not skip?
-          limited = new Array()
-          for x in [0..(limit - 1)]
-            do (x) ->
-              limited.push datastores[x]
-          
-          return fn null, limited
-
-        else fn null, datastores
+        fn null, datastores
 
       # handle "POST" requests
       # `ds.insert` is used
@@ -137,6 +128,18 @@ crudify = (opts, req, fn) ->
       # do error on unsupported requests
       else 
         fn error: "Unsupported http method, please try again.", null
+
+queryHandler = {}
+
+queryHandler.skip = (skip, data, fn) ->
+  dataLen = data.length
+  arr = data.splice(skip, (dataLen - parseInt(skip)))
+  return fn null, arr
+
+queryHandler.limit = (limit, data, fn) ->
+  dataLen = data.length
+  arr = data.splice(0, limit)
+  return fn null, arr
 
 methodHandler = {}
 
