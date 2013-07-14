@@ -23,6 +23,7 @@ config = (opts) ->
 
   if opts? then _.extend @, opts
 
+  # check for deprecated vars and cover their ass.
   if @file_name? 
     console.log "`file_name` is deprecated, please use `fileName` in your config file"
     @fileName = @file_name
@@ -39,9 +40,11 @@ config::ds = (fn) ->
   
   self = @
   
+  # create a new ds object if one isn't there already
+    
   if @memoryStore == false
-    @ds = new DataStore filename: path.join self.filePath, self.fileName
-  else
+    @ds = new DataStore filename: path.join self.filePath, self.fileName 
+  else 
     @ds = new DataStore()
 
   fn null, @ds

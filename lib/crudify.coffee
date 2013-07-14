@@ -3,6 +3,7 @@
 
 # underscores is amazing, we'll be using this a lot.
 _ = require "underscore"
+qs = require "querystring"
 
 extendify = require "./extended"
 
@@ -19,7 +20,7 @@ crudify = (opts, req, fn) ->
   Schema = ds.Schema
 
   # listen for `req.param('id')` will fallback until it finds the id
-  query = if req.param("id")? then {_id: req.param("id")} else {}
+  id = if req.param("id")? then {_id: req.param("id")} else {}
   
   # `append` (Boolean) is a little trick to extend our update 
   # object with its original contents, plus any new content
@@ -31,6 +32,16 @@ crudify = (opts, req, fn) ->
   
   # `skip` works currently, just not the best pattern -- `tired`.
   skip = if req.param("skip")? then req.param("skip") else null
+
+  # define a list of protected querys to listen for and not do
+  # searches with them
+  privates = ['skip', 'limit', 'append', 'id']
+
+  query = {}
+
+  for key, value of req.query
+    if privates.indexOf(key) == -1
+      query[key] = value
 
   # do our switch stuff based on this variable
   method = req.method.toLowerCase()
@@ -60,7 +71,7 @@ crudify = (opts, req, fn) ->
     return fn error: "You must provide a body to go along with this request.. please try again.", null
 
   # ensure our delete has an id, otherwise we're its gonna delete randomly?~ out of our cache, das ist bad..
-  if (method == "delete") and not query._id?
+  if (method == "delete") and not id._id?
     return fn error: "One does not always delete the abyss, but when one does, one must include an id", null
 
   # ensure our datastore is loaded, we don't want to rush anything.
@@ -72,12 +83,11 @@ crudify = (opts, req, fn) ->
 
       # handle "GET" requests
       # `ds.query` is used
-      when "get" then methodHandler.get query, (err, datastores) ->
+      when "get" then methodHandler.get id, query, (err, datastores) ->
         return if err? then fn err, null
 
-        ### @todo Fix these !!! ###
-        # added these quickly for my project because I needed it,
-        # will splice through this stuff when I refactor this file (tomorrow?)
+        ### @todo ###
+        # added these quickly for my project because I needed it
 
         if exclude.length > 0
 
@@ -109,19 +119,19 @@ crudify = (opts, req, fn) ->
 
       # handle "PUT" requests
       # `ds.update` is used
-      when "put" then methodHandler.put query, body, append, (err, updated) ->
+      when "put" then methodHandler.put id, body, append, (err, updated) ->
         return if err? then fn err, null
         fn null, updated
 
       # handle "DELETE" requests
       # `ds.remove` is used
-      when "delete" then methodHandler.delete query, (err, deleted) ->
+      when "delete" then methodHandler.delete id, (err, deleted) ->
         return if err? then fn err, null
         fn null, deleted
 
       # handle "HEAD" requests
       # `ds.remove` is used
-      when "head" then methodHandler.head query, (err, header) ->
+      when "head" then methodHandler.head id, (err, header) ->
         return if err? then fn err, null
         fn null, header
 
@@ -141,16 +151,26 @@ queryHandler.limit = (limit, data, fn) ->
   arr = data.splice(0, limit)
   return fn null, arr
 
+queryHandler.sort = (sort, data, fn) ->
+
+  return fn null, err
+
 methodHandler = {}
 
-methodHandler.get = (query, fn) ->
+methodHandler.get = (id, query, fn) ->
+
+  if _.isFunction query
+    fn = query
+    query = {}
+    
+  if _.isObject query then _.extend id, query
 
   # default query, accepts by `req.query.id` or 
   # an empty object, logic is in the crudify() fn
-  ds.find query, (err, datastores) ->
+  ds.find id, (err, datastores) ->
     return if err? then fn err, null
     fn null, datastores
-
+  
 methodHandler.post = (insert, fn) ->
   
   # insert, later we'll make a safe insert or something
@@ -160,34 +180,34 @@ methodHandler.post = (insert, fn) ->
     return if err? then fn err, null
     fn null, inserted
 
-methodHandler.delete = (query, fn) ->
+methodHandler.delete = (id, fn) ->
 
   # delete by id, make sure our query is built properly.
-  ds.remove query, (err, total) ->
+  ds.remove id, (err, total) ->
     return if err? then fn err, null
     if total > 0
-      resp = _.extend query, {num_deleted: total}
+      resp = _.extend id, {num_deleted: total}
       fn null, resp
     else
       fn error: "No items deleted, please check your id", null
 
-methodHandler.head = (query, fn) ->
-  return fn {error: "Unsupported http method, please try again", query: query}, null
+methodHandler.head = (id, fn) ->
+  return fn {error: "Unsupported http method, please try again", id: id}, null
 
-methodHandler.put = (query, update, append, fn) ->
+methodHandler.put = (id, update, append, fn) ->
 
   # if append is true we're going to query for our item
   # and extend it, otherwise we're just gonna overwrite it
   if append == true
 
     # findOne, then extend the object.. magic.
-    ds.findOne query, (err, found) ->
+    ds.findOne id, (err, found) ->
       return if err? then fn err, null
 
       # extend found with update, sweeeet
       _.extend found, update
 
-      ds.update query, found, (err, updated) ->
+      ds.update id, found, (err, updated) ->
         return if err? then fn err, null
 
         # we can assume we're error free, lets extend
@@ -195,7 +215,7 @@ methodHandler.put = (query, update, append, fn) ->
         
         if updated > 0
           # we've successfully updated something, move on!
-          resp = _.extend query, found
+          resp = _.extend id, found
           fn null, resp
         else
           # boohoo, we've got trouble.
@@ -205,7 +225,7 @@ methodHandler.put = (query, update, append, fn) ->
   else
 
     # we're not going to append here, so we'll just do a hard update
-    ds.update query, update, (err, updated) ->
+    ds.update id, update, (err, updated) ->
       return if err? then fn err, null
 
         # we can assume we're error free, lets extend
@@ -213,7 +233,7 @@ methodHandler.put = (query, update, append, fn) ->
         
       if updated > 0
         # we've successfully updated something, move on!
-        resp = _.extend query, update
+        resp = _.extend id, update
         fn null, resp
       else
         # boohoo, we've got trouble.

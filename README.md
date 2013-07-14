@@ -82,6 +82,12 @@ GET http://localhost:3000/session/v1/:id?skip=10
 GET http://localhost:3000/session/v1/:id?limit=20&skip=10
 ```
 
+### Query / Searching
+
+```md
+GET http://localhost:3000/session/v1?key=value
+```
+
 ### Additional
 
 ```md
