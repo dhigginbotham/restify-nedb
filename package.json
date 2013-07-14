@@ -27,7 +27,8 @@
     "request": "latest",
     "chai": "~1.7.2",
     "superagent": "~0.15.4",
-    "expect.js": "~0.2.0"
+    "expect.js": "~0.2.0",
+    "express": "~3.3.4"
   },
   "engines": {
     "node": ">=0.8.0"
