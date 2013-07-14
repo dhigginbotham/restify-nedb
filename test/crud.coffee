@@ -27,6 +27,22 @@ describe "restify-nedb crud tests", () ->
         expect(json.stale).not.to.be(undefined)
         done()
 
+  describe "POST insert 100 docs into our cache", () ->
+    it "should add 100 docs into our cache with a 5 minute stale", (done) ->
+
+      opts = {uri: "#{uri}/session/v1", form: {test: "test posting new object", _stale: 1000 * 60}, method: "post"}
+
+      for i in [1..100]
+        do (i) ->
+          request opts, (err, resp, body) ->
+            expect(err).to.be(null)
+            expect(resp.statusCode).to.eql(200)
+            expect(body).not.to.be(undefined)
+            json = JSON.parse body
+            expect(json.stale).not.to.be(undefined)
+
+      done()
+
   describe "GET by _id", () ->
     it "should return a single result matching it's _id", (done) ->
 

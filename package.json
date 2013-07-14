@@ -1,6 +1,6 @@
 {
   "name": "restify-nedb",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "simple to use nedb cache layer with restful api routing",
   "keywords": [
     "nedb",
@@ -31,6 +31,9 @@
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha test/*"
   },
   "bugs": "https://github.com/dhigginbotham/restify-nedb/issues",
   "repository": {
