@@ -113,6 +113,9 @@ mocha test\crud.coffee -R spec --compilers coffee:coffee-script
 ##### Pro-tip
 I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help.
 
+![](https://nodei.co/npm/restify-nedb.png?downloads=true&stars=true)
+
+
 ## License
 ```md
 The MIT License (MIT)
