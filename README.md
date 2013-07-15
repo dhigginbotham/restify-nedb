@@ -79,10 +79,10 @@ PUT http://localhost:3000/session/v1?id=:id
 ### Ordering
 
 ```md
-GET http://localhost:3000/session/v1/:id?limit=20
-GET http://localhost:3000/session/v1/:id?skip=10
-GET http://localhost:3000/session/v1/:id?sort=val
-GET http://localhost:3000/session/v1/:id?sort=-val
+GET http://localhost:3000/session/v1?limit=20
+GET http://localhost:3000/session/v1?skip=10
+GET http://localhost:3000/session/v1?sort=val
+GET http://localhost:3000/session/v1?sort=-val
 ```
 
 ### Query / Searching
