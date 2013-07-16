@@ -31,7 +31,6 @@ app = module.exports = express()
 
 nedb = require("restify-nedb").mount
 config = require("restify-nedb").config
-
 ensure = require "../passport/middleware"
 
 opts = 
