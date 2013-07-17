@@ -39,6 +39,8 @@ crudify = (opts, req, fn) ->
   # searches with them
   privates = ['skip', 'limit', 'append', 'id', 'sort']
 
+
+  # build out our search/query object
   query = {}
 
   for key, value of req.query
@@ -54,7 +56,6 @@ crudify = (opts, req, fn) ->
 
   # cache keys array, helpful for length and such, we'll use it to validate
   # proper cache objects later on
-  
   keys = Object.keys req.body
 
   # if the bodyParser has an object, we're going to create a schema
@@ -188,7 +189,7 @@ methodHandler.get = (id, query, fn) ->
 methodHandler.post = (insert, fn) ->
   
   # insert, later we'll make a safe insert or something
-  # along those lines, maybe something like `findOrUpdate`
+  # along those lines, maybe something like `findAndUpdate`
   # from supergoose
   ds.insert insert, (err, inserted) ->
     return if err? then fn err, null

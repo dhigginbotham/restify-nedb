@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2>restify-nedb</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>mount export will allow you to mount the app routes to your express application</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>exports.mount = require <span class="string">"./mount"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>if you use your own process of nedb and would like to create schemas/cache etc you can use this</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>usage:
+  extend = require(&quot;restify-nedb&quot;).extended</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>  schema =
+    name: &quot;dave&quot;
+    email: &quot;some@email.com&quot;
+    phone: 411
+    can_contact: true</p>
+<pre><code># use this option to turn off cache
+stale: false</code></pre>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>   Schema = new extend schema</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+exports.extended = require <span class="string">"./extended"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>build a config, includes a ds prototype you can call after initializing
+the config object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+exports.config = require <span class="string">"./config"</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
