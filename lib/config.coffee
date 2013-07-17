@@ -57,7 +57,10 @@ config::ds = (fn) ->
   # older, tired version of the return
   # fn null, @ds
 
-  fn null, @
+  if fn? and typeof fn != "undefined" and _.isFunction fn
+    fn null, @
+  else
+    @
 
 config::inherit = (opts) ->
   
