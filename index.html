@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Restify-nedb by dhigginbotham</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Restify-nedb</h1>
+        <p>restful routes for nedb w/ simple garbarge collection</p>
+        <p class="view"><a href="https://github.com/dhigginbotham/restify-nedb">View the Project on GitHub <small>dhigginbotham/restify-nedb</small></a></p>
+        <ul>
+          <li><a href="https://github.com/dhigginbotham/restify-nedb/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/dhigginbotham/restify-nedb/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/dhigginbotham/restify-nedb">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="restify-nedb-for-nedb" class="anchor" href="#restify-nedb-for-nedb"><span class="octicon octicon-link"></span></a>restify-nedb (for <a href="https://github.com/louischatriot/nedb">nedb</a>)</h1>
+
+<p><img src="https://api.travis-ci.org/dhigginbotham/restify-nedb.png" alt=""></p>
+
+<p><code>restify-nedb</code> was built to give you restful api resources for client side application frameworks like <code>angular.js</code>, <code>ember.js</code>, <code>backbone.js</code> or <code>knockout.js</code> as well as give you a simple file/memory based cache utilizing <a href="https://github.com/louischatriot/nedb">nedb</a>. (ps, i love <a href="https://github.com/louischatriot/nedb">nedb</a>, you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. <em>Really neat.</em></p>
+
+<h3>
+<a name="heads-up-shes-still-a-baby" class="anchor" href="#heads-up-shes-still-a-baby"><span class="octicon octicon-link"></span></a>Heads up, she's still a baby</h3>
+
+<ul>
+<li>Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way</li>
+<li>There's still a good chunk of the <code>nedb</code> api I need to wrap in, if you need the core crud stuff, this should work well for you</li>
+<li>I'd like to point out there coule be a few rough parts, but it's coming along.<br>
+</li>
+</ul><h3>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h3>
+
+<ul>
+<li>Super fast <code>nedb</code> file/memory backed cache w/ simple garbage collection</li>
+<li>100% coffeescript, hate it or love it </li>
+<li>restful routing: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code> </li>
+<li>parses <code>json/multi-part</code>
+</li>
+</ul><h3>
+<a name="installation-w-express" class="anchor" href="#installation-w-express"><span class="octicon octicon-link"></span></a>Installation (w/ Express)</h3>
+
+<h5>
+<a name="step-1-install-the-app-automatically-add-the-latest-version-in-your-packagejson" class="anchor" href="#step-1-install-the-app-automatically-add-the-latest-version-in-your-packagejson"><span class="octicon octicon-link"></span></a>Step 1) Install the app, automatically add the latest version in your <code>package.json</code>
+</h5>
+
+<pre><code>npm install restify-nedb --save
+</code></pre>
+
+<h5>
+<a name="step-2-configure-your-app-needs-access-to-app-so-you-can-do-that-a-number-of-ways-reqapp-resapp-appuse-app-etc" class="anchor" href="#step-2-configure-your-app-needs-access-to-app-so-you-can-do-that-a-number-of-ways-reqapp-resapp-appuse-app-etc"><span class="octicon octicon-link"></span></a>Step 2) Configure your app, needs access to <code>app</code>, so you can do that a number of ways, <code>req.app</code>, <code>res.app</code>, <code>app.use</code>, <code>app</code>, etc..</h5>
+
+<div class="highlight"><pre><span class="nv">express = </span><span class="nx">require</span> <span class="s">"express"</span>
+<span class="nv">app = module.exports = </span><span class="nx">express</span><span class="p">()</span>
+
+<span class="nv">nedb = </span><span class="nx">require</span><span class="p">(</span><span class="s">"restify-nedb"</span><span class="p">).</span><span class="nx">mount</span>
+<span class="nv">config = </span><span class="nx">require</span><span class="p">(</span><span class="s">"restify-nedb"</span><span class="p">).</span><span class="nx">config</span>
+<span class="nv">ensure = </span><span class="nx">require</span> <span class="s">"../passport/middleware"</span>
+
+<span class="nv">opts = </span>
+  <span class="nv">filePath: </span><span class="nx">conf</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">paths</span><span class="p">.</span><span class="nx">cache</span>
+  <span class="nv">maxAge: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span>
+  <span class="nv">prefix: </span><span class="s">"/session"</span>
+  <span class="nv">middleware: </span><span class="p">[</span><span class="nx">ensure</span><span class="p">.</span><span class="nx">admins</span><span class="p">]</span>
+
+<span class="nv">cfg = </span><span class="k">new</span> <span class="nx">config</span> <span class="nx">opts</span>
+
+<span class="c1"># cfg.ds (err, internal) -&gt;</span>
+<span class="c1">#   api = new nedb internal, app</span>
+
+<span class="c1"># or</span>
+
+<span class="nx">cfg</span><span class="p">.</span><span class="nx">ds</span><span class="p">()</span>
+<span class="nv">api = </span><span class="k">new</span> <span class="nx">nedb</span> <span class="nx">cfg</span><span class="p">,</span> <span class="nx">app</span>
+</pre></div>
+
+<h5>
+<a name="step-3-submit-bugs-and-nasties-here" class="anchor" href="#step-3-submit-bugs-and-nasties-here"><span class="octicon octicon-link"></span></a>Step 3) Submit bugs and nasties <a href="https://github.com/dhigginbotham/restify-nedb/issues">here</a>.</h5>
+
+<h2>
+<a name="configuration-options" class="anchor" href="#configuration-options"><span class="octicon octicon-link"></span></a>Configuration Options</h2>
+
+<table>
+<thead><tr>
+<th>Options</th>
+<th>Defaults</th>
+<th>Type</th>
+<th>Infos</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>ds</strong></td>
+<td><code>internal</code></td>
+<td>DataStore</td>
+<td>allow for outside nedb processes to be restified. tip: <code>config.ds()</code> returns a new DataStore with whatever your <code>opts</code> are set to, once it's fired it will internalize and share</td>
+</tr>
+<tr>
+<td><strong>prefix</strong></td>
+<td><code>/ds</code></td>
+<td>String</td>
+<td>defines the first route path, for instance <code>http://localhost:3000/ds</code>
+</td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td><code>/v1</code></td>
+<td>String</td>
+<td>not preferred, as a rule i feel these aren't the best idea for your api, last thing you want is fragmentation in your api</td>
+</tr>
+<tr>
+<td><strong>exclude</strong></td>
+<td><code>[]</code></td>
+<td>Array</td>
+<td>excludes keys/values from the api, good for things like <code>password</code>
+</td>
+</tr>
+<tr>
+<td><strong>middleware</strong></td>
+<td><code>[]</code></td>
+<td>Array</td>
+<td>middlewares, ie passport authentication, logging, analytics</td>
+</tr>
+<tr>
+<td><strong>memoryStore</strong></td>
+<td><code>false</code></td>
+<td>Boolean</td>
+<td>whether or not keep an in-memory store or a file based persistant store, defaults to <code>false</code>, we like persistant files.</td>
+</tr>
+<tr>
+<td><strong>fileName</strong></td>
+<td><code>nedb-filestore.db</code></td>
+<td>String</td>
+<td>file name for your nedb filestore</td>
+</tr>
+<tr>
+<td><strong>filePath</strong></td>
+<td><code>../db</code></td>
+<td>String</td>
+<td>bit easier to change the path and view the contents instead of digging through <code>node_modules</code>
+</td>
+</tr>
+<tr>
+<td><strong>maxAge</strong></td>
+<td><code>1000 * 60 * 60</code></td>
+<td>Number</td>
+<td>if set to <code>null</code> or <code>false</code> automated gc will be disabled</td>
+</tr>
+<tr>
+<td><strong>store</strong></td>
+<td><code>undefined</code></td>
+<td>String</td>
+<td>
+<code>not currently working</code> - will allow for multiple nedb collections, still working out the kinks.</td>
+</tr>
+</tbody>
+</table><h2>
+<a name="routes" class="anchor" href="#routes"><span class="octicon octicon-link"></span></a>Routes</h2>
+
+<div class="highlight"><pre><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1</span>
+<span class="n">POST</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1</span>
+
+<span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1/:id</span>
+<span class="n">PUT</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1/:id</span>
+<span class="n">DELETE</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1/:id</span>
+
+<span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?id=:id</span>
+<span class="n">PUT</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?id=:id</span>
+</pre></div>
+
+<h3>
+<a name="ordering" class="anchor" href="#ordering"><span class="octicon octicon-link"></span></a>Ordering</h3>
+
+<div class="highlight"><pre><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?limit=20</span>
+<span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?skip=10</span>
+<span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?sort=val</span>
+<span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?sort=-val</span>
+</pre></div>
+
+<h3>
+<a name="query--searching" class="anchor" href="#query--searching"><span class="octicon octicon-link"></span></a>Query / Searching</h3>
+
+<div class="highlight"><pre><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1?key=value</span>
+</pre></div>
+
+<h3>
+<a name="additional" class="anchor" href="#additional"><span class="octicon octicon-link"></span></a>Additional</h3>
+
+<div class="highlight"><pre><span class="n">PUT</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1/:id?append=true</span>
+</pre></div>
+
+<ul>
+<li>append defaults to false. Set to true to do something similar to <code>findAndUpdate</code>
+</li>
+</ul><div class="highlight"><pre><span class="n">POST</span> <span class="n">http</span><span class="p">:</span><span class="c1">//localhost:3000/session/v1</span>
+</pre></div>
+
+<ul>
+<li>
+<code>_stale</code> in your body/json will act as an override to <code>stale</code>, say you need some things to last longer/shorter than other cached items</li>
+</ul><h5>
+<a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h5>
+
+<div class="highlight"><pre><span class="n">mocha</span> <span class="n">test</span><span class="p">\</span><span class="n">crud</span><span class="p">.</span><span class="n">coffee</span> <span class="p">-</span><span class="n">R</span> <span class="n">spec</span> <span class="p">--</span><span class="n">compilers</span> <span class="n">coffee</span><span class="p">:</span><span class="n">coffee</span><span class="p">-</span><span class="n">script</span>
+</pre></div>
+
+<h5>
+<a name="pro-tips" class="anchor" href="#pro-tips"><span class="octicon octicon-link"></span></a>Pro-tips</h5>
+
+<ul>
+<li>I would recommend using something like <a href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US">Advanced REST Client</a> for testing, it'll help.</li>
+<li>If you want upto date / latest documentation run <code>cake docs</code>, this way if I forget, you can easily skim thru the source -- <code>/docs</code> should be included.</li>
+</ul><p><img src="https://nodei.co/npm/restify-nedb.png?downloads=true&amp;stars=true" alt=""></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<div class="highlight"><pre><span class="n">The</span> <span class="n">MIT</span> <span class="n">License</span> <span class="p">(</span><span class="n">MIT</span><span class="p">)</span>
+
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2013</span> <span class="n">David</span> <span class="n">Higginbotham</span> 
+
+<span class="n">Permission</span> <span class="k">is</span> <span class="n">hereby</span> <span class="n">granted</span><span class="p">,</span> <span class="n">free</span> <span class="n">of</span> <span class="n">charge</span><span class="p">,</span> <span class="n">to</span> <span class="n">any</span> <span class="n">person</span> <span class="n">obtaining</span> <span class="n">a</span> <span class="n">copy</span>
+<span class="n">of</span> <span class="k">this</span> <span class="n">software</span> <span class="n">and</span> <span class="n">associated</span> <span class="n">documentation</span> <span class="n">files</span> <span class="p">(</span><span class="n">the</span> <span class="s">"Software"</span><span class="p">),</span> <span class="n">to</span> <span class="n">deal</span>
+<span class="k">in</span> <span class="n">the</span> <span class="n">Software</span> <span class="n">without</span> <span class="n">restriction</span><span class="p">,</span> <span class="n">including</span> <span class="n">without</span> <span class="n">limitation</span> <span class="n">the</span> <span class="n">rights</span>
+<span class="n">to</span> <span class="n">use</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">modify</span><span class="p">,</span> <span class="n">merge</span><span class="p">,</span> <span class="n">publish</span><span class="p">,</span> <span class="n">distribute</span><span class="p">,</span> <span class="n">sublicense</span><span class="p">,</span> <span class="n">and</span><span class="p">/</span><span class="n">or</span> <span class="n">sell</span>
+<span class="n">copies</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Software</span><span class="p">,</span> <span class="n">and</span> <span class="n">to</span> <span class="n">permit</span> <span class="n">persons</span> <span class="n">to</span> <span class="n">whom</span> <span class="n">the</span> <span class="n">Software</span> <span class="k">is</span>
+<span class="n">furnished</span> <span class="n">to</span> <span class="k">do</span> <span class="n">so</span><span class="p">,</span> <span class="n">subject</span> <span class="n">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span><span class="p">:</span>
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="n">and</span> <span class="k">this</span> <span class="n">permission</span> <span class="n">notice</span> <span class="n">shall</span> <span class="n">be</span> <span class="n">included</span> <span class="k">in</span>
+<span class="n">all</span> <span class="n">copies</span> <span class="n">or</span> <span class="n">substantial</span> <span class="n">portions</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Software</span><span class="p">.</span>
+
+<span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="n">IS</span> <span class="n">PROVIDED</span> <span class="s">"AS IS"</span><span class="p">,</span> <span class="n">WITHOUT</span> <span class="n">WARRANTY</span> <span class="n">OF</span> <span class="n">ANY</span> <span class="n">KIND</span><span class="p">,</span> <span class="n">EXPRESS</span> <span class="n">OR</span>
+<span class="n">IMPLIED</span><span class="p">,</span> <span class="n">INCLUDING</span> <span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span> <span class="n">THE</span> <span class="n">WARRANTIES</span> <span class="n">OF</span> <span class="n">MERCHANTABILITY</span><span class="p">,</span>
+<span class="n">FITNESS</span> <span class="n">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span> <span class="n">PURPOSE</span> <span class="n">AND</span> <span class="n">NONINFRINGEMENT</span><span class="p">.</span> <span class="n">IN</span> <span class="n">NO</span> <span class="n">EVENT</span> <span class="n">SHALL</span> <span class="n">THE</span>
+<span class="n">AUTHORS</span> <span class="n">OR</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span> <span class="n">BE</span> <span class="n">LIABLE</span> <span class="n">FOR</span> <span class="n">ANY</span> <span class="n">CLAIM</span><span class="p">,</span> <span class="n">DAMAGES</span> <span class="n">OR</span> <span class="n">OTHER</span>
+<span class="n">LIABILITY</span><span class="p">,</span> <span class="n">WHETHER</span> <span class="n">IN</span> <span class="n">AN</span> <span class="n">ACTION</span> <span class="n">OF</span> <span class="n">CONTRACT</span><span class="p">,</span> <span class="n">TORT</span> <span class="n">OR</span> <span class="n">OTHERWISE</span><span class="p">,</span> <span class="n">ARISING</span> <span class="n">FROM</span><span class="p">,</span>
+<span class="n">OUT</span> <span class="n">OF</span> <span class="n">OR</span> <span class="n">IN</span> <span class="n">CONNECTION</span> <span class="n">WITH</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="n">OR</span> <span class="n">THE</span> <span class="n">USE</span> <span class="n">OR</span> <span class="n">OTHER</span> <span class="n">DEALINGS</span> <span class="n">IN</span>
+<span class="n">THE</span> <span class="n">SOFTWARE</span><span class="p">.</span>
+</pre></div>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/dhigginbotham">dhigginbotham</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
