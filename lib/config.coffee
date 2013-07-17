@@ -47,7 +47,17 @@ config::ds = (fn) ->
   else 
     @ds = new DataStore()
 
-  fn null, @ds
+  # sitting here scratching my head at this pattern, lol
+  # I must have been tired, I know this is a little monkey
+  # patch for adding an internal ds, however I think this
+  # will have to be rethought out, I mean srsly we don't even
+  # need the cb in this scenario, however it is nice to have
+  # but it returns a pointless thing.
+
+  # older, tired version of the return
+  # fn null, @ds
+
+  fn null, @
 
 config::inherit = (opts) ->
   

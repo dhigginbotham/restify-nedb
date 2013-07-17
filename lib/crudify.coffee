@@ -6,7 +6,8 @@ _ = require "underscore"
 
 extendify = require "./extended"
 
-# require your nedb installation
+
+# monkeying around with this... so i can be lazier with additional stuffs.
 ds = null
 
 # crudify switch, will handle all acceptable routes and pass json errors
@@ -87,9 +88,7 @@ crudify = (opts, req, fn) ->
       when "get" then methodHandler.get id, query, (err, datastores) ->
         return if err? then fn err, null
 
-        ### @todo ###
-        # added these quickly for my project because I needed it
-
+        # fix this silliness... lol
         if exclude.length > 0
 
           keys = Object.keys datastores
