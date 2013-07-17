@@ -9,8 +9,9 @@ nedb = require "./restify"
 
 server = require("http").createServer app
 
-app.use express.compress()
+app.set "port", 1337
 
+app.use express.compress()
 # include stuff to do only when we're in 
 # a development environment
 if process.env.NODE_ENV == "development"
@@ -35,11 +36,11 @@ app.use nedb
 # csrf protection, only call this on areas
 # you want protection, ideally any admin/backend
 # as well as accounts/auth stuff - as a rule.
-app.use express.csrf()
+# app.use express.csrf()
 
 # app.use otherRoutes
 # app.get "otherRoute", middle, route
 
 # start this train! woo woo!
 server.listen app.get("port"), () ->
-  console.log ":: #{conf.app.title} :: #{conf.app.serverStart} on port #{app.get("port")}"
+  console.log ":: restify-nedb example :: started!"

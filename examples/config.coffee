@@ -1,9 +1,9 @@
 nedbConfig = require("restify-nedb").config
-
-conf = require "../../conf"
+path = require "path"
+fs = require "fs"
 
 opts = 
-  filePath: conf.app.paths.cache
+  filePath: path.join __dirname, "db"
   maxAge: 1000 * 60 * 60
   prefix: "/session"
   # middleware: [ensure.admins]
