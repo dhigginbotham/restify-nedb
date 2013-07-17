@@ -99,7 +99,7 @@ GET http://localhost:3000/session/v1?key=value
 ```md
 PUT http://localhost:3000/session/v1/:id?append=true
 ```
-- append defaults to false. Set to true to do something similar to findOrUpdate
+- append defaults to false. Set to true to do something similar to `findAndUpdate`
  
 ```md
 POST http://localhost:3000/session/v1
