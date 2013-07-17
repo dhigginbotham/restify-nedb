@@ -41,8 +41,13 @@ opts =
 
 cfg = new config opts
 
-cfg.ds (err, internal) ->
-  api = new nedb internal, app
+# cfg.ds (err, internal) ->
+#   api = new nedb internal, app
+
+# or
+
+cfg.ds()
+api = new nedb cfg, app
 ```
 
 ##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
