@@ -28,7 +28,7 @@ describe "restify-nedb crud tests", () ->
         done()
 
   describe "POST insert 100 docs into our cache", () ->
-    it "should add 100 docs into our cache with a 5 minute stale", (done) ->
+    it "should add 100 docs into our cache with a 1 minute stale", (done) ->
 
       opts = {uri: "#{uri}/session/v1", form: {test: "test posting new object", _stale: 1000 * 60}, method: "post"}
 
