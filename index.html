@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Restify-nedb by dhigginbotham</title>
+    <title>Restify NeDB by dhigginbotham</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -17,8 +17,8 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Restify-nedb</h1>
-        <p>restful routes for nedb w/ simple garbarge collection</p>
+        <h1>Restify NeDB</h1>
+        <p>Express module that adds a REST API for NeDB</p>
         <p class="view"><a href="https://github.com/dhigginbotham/restify-nedb">View the Project on GitHub <small>dhigginbotham/restify-nedb</small></a></p>
         <ul>
           <li><a href="https://github.com/dhigginbotham/restify-nedb/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -30,7 +30,7 @@
         <h1>
 <a name="restify-nedb-for-nedb" class="anchor" href="#restify-nedb-for-nedb"><span class="octicon octicon-link"></span></a>restify-nedb (for <a href="https://github.com/louischatriot/nedb">nedb</a>)</h1>
 
-<p><img src="https://api.travis-ci.org/dhigginbotham/restify-nedb.png" alt="Travis Build Status"><img src="https://badge.fury.io/js/restify-nedb.png" alt="NPM version"></p>
+<p><img src="https://badge.fury.io/js/restify-nedb.png" alt="NPM version"></p>
 
 <p><code>restify-nedb</code> was built to give you restful api resources for client side application frameworks like <code>angular.js</code>, <code>ember.js</code>, <code>backbone.js</code> or <code>knockout.js</code> as well as give you a simple file/memory based cache utilizing <a href="https://github.com/louischatriot/nedb">nedb</a>. (ps, i love <a href="https://github.com/louischatriot/nedb">nedb</a>, you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. <em>Really neat.</em></p>
 
@@ -64,28 +64,66 @@
 <h5>
 <a name="step-2-configure-your-app-needs-access-to-app-so-you-can-do-that-a-number-of-ways-reqapp-resapp-appuse-app-etc" class="anchor" href="#step-2-configure-your-app-needs-access-to-app-so-you-can-do-that-a-number-of-ways-reqapp-resapp-appuse-app-etc"><span class="octicon octicon-link"></span></a>Step 2) Configure your app, needs access to <code>app</code>, so you can do that a number of ways, <code>req.app</code>, <code>res.app</code>, <code>app.use</code>, <code>app</code>, etc..</h5>
 
-<div class="highlight"><pre><span class="nv">express = </span><span class="nx">require</span> <span class="s">"express"</span>
+<div class="highlight"><pre>
+  <span class="cm">/* example in .js */</span>
+
+<span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'express'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">restify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'restify-nedb'</span><span class="p">).</span><span class="nx">mount</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'restify-nedb'</span><span class="p">).</span><span class="nx">config</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">sampleMiddleware</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'here\'s a sample middleware...'</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">next</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// default config options</span>
+<span class="kd">var</span> <span class="nx">opts</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">filePath</span><span class="o">:</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/db/filestore.db'</span><span class="p">,</span>
+  <span class="nx">maxAge</span><span class="o">:</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span>
+  <span class="nx">prefix</span><span class="o">:</span> <span class="s1">'/session'</span><span class="p">,</span>
+  <span class="nx">middleware</span><span class="o">:</span> <span class="p">[</span><span class="nx">sampleMiddleware</span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// initialize our config object</span>
+
+<span class="nx">cfg</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">config</span><span class="p">(</span><span class="nx">opts</span><span class="p">);</span>
+
+<span class="c1">// if you aren't already using an nedb</span>
+<span class="c1">// instance, then calling this will create</span>
+<span class="c1">// one for you.</span>
+<span class="nx">cfg</span><span class="p">.</span><span class="nx">ds</span><span class="p">();</span>
+
+<span class="c1">// builds routes</span>
+<span class="nx">api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">restify</span><span class="p">(</span><span class="nx">cfg</span><span class="p">,</span> <span class="nx">app</span><span class="p">);</span>
+</pre></div>
+
+<hr><div class="highlight"><pre><span class="nv">express = </span><span class="nx">require</span> <span class="s">"express"</span>
 <span class="nv">app = module.exports = </span><span class="nx">express</span><span class="p">()</span>
 
-<span class="nv">nedb = </span><span class="nx">require</span><span class="p">(</span><span class="s">"restify-nedb"</span><span class="p">).</span><span class="nx">mount</span>
+<span class="nv">restify = </span><span class="nx">require</span><span class="p">(</span><span class="s">"restify-nedb"</span><span class="p">).</span><span class="nx">mount</span>
 <span class="nv">config = </span><span class="nx">require</span><span class="p">(</span><span class="s">"restify-nedb"</span><span class="p">).</span><span class="nx">config</span>
-<span class="nv">ensure = </span><span class="nx">require</span> <span class="s">"../passport/middleware"</span>
+
+<span class="nv">sampleMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">"here's a sample middleware..."</span>
+  <span class="nx">next</span><span class="p">()</span>
 
 <span class="nv">opts = </span>
   <span class="nv">filePath: </span><span class="nx">conf</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">paths</span><span class="p">.</span><span class="nx">cache</span>
   <span class="nv">maxAge: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span>
   <span class="nv">prefix: </span><span class="s">"/session"</span>
-  <span class="nv">middleware: </span><span class="p">[</span><span class="nx">ensure</span><span class="p">.</span><span class="nx">admins</span><span class="p">]</span>
+  <span class="nv">middleware: </span><span class="p">[</span><span class="nx">sampleMiddleware</span><span class="p">]</span>
 
 <span class="nv">cfg = </span><span class="k">new</span> <span class="nx">config</span> <span class="nx">opts</span>
 
-<span class="c1"># cfg.ds (err, internal) -&gt;</span>
-<span class="c1">#   api = new nedb internal, app</span>
-
-<span class="c1"># or</span>
-
+<span class="c1"># if you aren't already using an nedb</span>
+<span class="c1"># instance, then calling this will create</span>
+<span class="c1"># one for you.</span>
 <span class="nx">cfg</span><span class="p">.</span><span class="nx">ds</span><span class="p">()</span>
-<span class="nv">api = </span><span class="k">new</span> <span class="nx">nedb</span> <span class="nx">cfg</span><span class="p">,</span> <span class="nx">app</span>
+
+<span class="c1"># builds routes</span>
+<span class="nv">api = </span><span class="k">new</span> <span class="nx">restify</span> <span class="nx">cfg</span><span class="p">,</span> <span class="nx">app</span>
 </pre></div>
 
 <h5>
