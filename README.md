@@ -35,7 +35,7 @@ var app = express();
 var restify = require('restify-nedb').mount;
 var config = require('restify-nedb').config;
 
-var sampleMiddleware = (req, res, next) {
+var sampleMiddleware = function (req, res, next) {
   console.log('here\'s a sample middleware...');
   return next();
 };
