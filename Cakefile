@@ -2,6 +2,7 @@ CoffeeScript = require 'coffee-script'
 {exec} = require 'child_process'
 fs = require 'fs'
 path = require 'path'
+flour = require "flour"
 
 appFiles  = [
   'crudify',
@@ -10,6 +11,13 @@ appFiles  = [
   'index',
   'mount'
 ]
+
+task "build:coffee", ->
+  compile './src/config.coffee', './lib/config.js'
+  compile './src/crudify.coffee', './lib/crudify.js'
+  compile './src/extended.coffee', './lib/extended.js'
+  compile './src/index.coffee', './lib/index.js'
+  compile './src/mount.coffee', './lib/mount.js'
 
 task 'build', 'Build single application file from source files', ->
   

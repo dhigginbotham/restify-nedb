@@ -11,7 +11,7 @@
     "router",
     "garbage collection"
   ],
-  "main": "lib/index.coffee",
+  "main": "lib/index.js",
   "author": {
     "name": "David Higginbotham",
     "email": "davehigginbotham@gmail.com"
@@ -28,7 +28,11 @@
     "chai": "~1.7.2",
     "superagent": "~0.15.4",
     "expect.js": "~0.2.0",
-    "express": "~3.3.4"
+    "uglify-js": "~2.3.6",
+    "stylus": "~0.34.1",
+    "flour": "~0.5.5",
+    "express": "~3.3.4",
+    "nedb": "~0.8.4"
   },
   "engines": {
     "node": ">=0.8.0"
