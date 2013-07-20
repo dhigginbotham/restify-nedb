@@ -25,6 +25,42 @@ npm install restify-nedb --save
 
 ##### Step 2) Configure your app, needs access to `app`, so you can do that a number of ways, `req.app`, `res.app`, `app.use`, `app`, etc..
 
+```js
+
+  /* example in .js */
+
+var express = require('express');
+var app = express();
+
+var restify = require('restify-nedb').mount;
+var config = require('restify-nedb').config;
+
+var sampleMiddleware = (req, res, next) {
+  console.log('here\'s a sample middleware...');
+  return next();
+};
+
+// default config options
+var opts = {
+  filePath: __dirname + '/db/filestore.db',
+  maxAge: 1000 * 60 * 60,
+  prefix: '/session',
+  middleware: [sampleMiddleware]
+};
+
+// initialize our config object
+
+cfg = new config(opts);
+
+// if you aren't already using an nedb
+// instance, then calling this will create
+// one for you.
+cfg.ds();
+
+// builds routes
+api = new restify(cfg, app);
+```
+----
 ```coffee
 express = require "express"
 app = module.exports = express()
@@ -40,11 +76,6 @@ opts =
   middleware: [ensure.admins]
 
 cfg = new config opts
-
-# cfg.ds (err, internal) ->
-#   api = new nedb internal, app
-
-# or
 
 cfg.ds()
 api = new nedb cfg, app
