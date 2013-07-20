@@ -1,6 +1,6 @@
 {
   "name": "restify-nedb",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "simple to use nedb cache layer with restful api routing",
   "keywords": [
     "nedb",
