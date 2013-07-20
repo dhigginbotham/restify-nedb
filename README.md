@@ -65,20 +65,28 @@ api = new restify(cfg, app);
 express = require "express"
 app = module.exports = express()
 
-nedb = require("restify-nedb").mount
+restify = require("restify-nedb").mount
 config = require("restify-nedb").config
-ensure = require "../passport/middleware"
+
+sampleMiddleware = (req, res, next) ->
+  console.log "here's a sample middleware..."
+  next()
 
 opts = 
   filePath: conf.app.paths.cache
   maxAge: 1000 * 60 * 60
   prefix: "/session"
-  middleware: [ensure.admins]
+  middleware: [sampleMiddleware]
 
 cfg = new config opts
 
+# if you aren't already using an nedb
+# instance, then calling this will create
+# one for you.
 cfg.ds()
-api = new nedb cfg, app
+
+# builds routes
+api = new restify cfg, app
 ```
 
 ##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
