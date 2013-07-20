@@ -43,11 +43,11 @@ task 'build', 'Build single application file from source files', ->
             console.log "Done."
 
 task "docs", "make documentation", ->
-  execOut "docco -o docs lib/crudify.coffee", 
-  execOut "docco -o docs lib/extended.coffee", 
-  execOut "docco -o docs lib/config.coffee", 
-  execOut "docco -o docs lib/index.coffee", 
-  execOut "docco -o docs lib/mount.coffee", 
+  execOut "docco -o docs src/crudify.coffee", 
+  execOut "docco -o docs src/extended.coffee", 
+  execOut "docco -o docs src/config.coffee", 
+  execOut "docco -o docs src/index.coffee", 
+  execOut "docco -o docs src/mount.coffee", 
 
 execOut = (commandLine) ->
   exec(commandLine, (err, stdout, stderr) ->
