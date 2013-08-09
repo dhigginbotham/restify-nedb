@@ -34,7 +34,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "mocha test/crud.coffee -R spec -t 3000 --compilers coffee:coffee-script"
+    "test": "mocha test/express-rest.js -R spec -t 3000"
   },
   "bugs": "https://github.com/dhigginbotham/restify-nedb/issues",
   "repository": {
