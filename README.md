@@ -160,6 +160,10 @@ POST / PUT http://localhost:3000/session/v1
 npm test
 ```
 
+### Cake tools
+- `cake build:docs` will build annotated source code documentation from docco
+- `cake build:coffee` will compile coffee from `/src` to js in `/lib`
+
 ##### Pro-tips
 - I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help.
 - If you want upto date / latest documentation run `cake docs`, this way if I forget, you can easily skim thru the source -- `/docs` should be included.

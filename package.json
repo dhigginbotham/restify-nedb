@@ -29,7 +29,8 @@
     "flour": "~0.5.5",
     "express": "~3.3.4",
     "superagent": "~0.15.4",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "docco": "~0.6.2"
   },
   "engines": {
     "node": ">=0.8.0"
