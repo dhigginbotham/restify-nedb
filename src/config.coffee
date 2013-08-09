@@ -1,5 +1,5 @@
 DataStore = require 'nedb'
-_ = require "lodash"
+_ = require "underscore"
 fs = require "fs"
 path = require "path"
 
@@ -36,7 +36,7 @@ config = (opts) ->
     
   @
 
-config::ds = (fn) ->
+config::makeDateStore = (fn) ->
   
   self = @
   

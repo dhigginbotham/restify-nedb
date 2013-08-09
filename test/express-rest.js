@@ -31,7 +31,7 @@ var opts = {
 
 var config = new nedbConf(opts);
 
-config.ds(function (err, ds) {
+config.makeDateStore(function (err, ds) {
   new nedbMount(config, app);
 });
 

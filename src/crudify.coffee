@@ -2,7 +2,7 @@
 # app.use express.bodyParser()
 
 # underscores is amazing, we'll be using this a lot.
-_ = require "lodash"
+_ = require "underscore"
 
 extendify = require "./extended"
 
