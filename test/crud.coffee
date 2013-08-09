@@ -1,6 +1,9 @@
 request = require "request"
 expect = require "expect.js"
-_ = require "underscore"
+_ = require "lodash"
+
+express = require "express"
+app = express()
 
 ###########################################
 # run tests w/ mocha (npm install mocha -g)

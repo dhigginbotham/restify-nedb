@@ -2,10 +2,9 @@
 # app.use express.bodyParser()
 
 # underscores is amazing, we'll be using this a lot.
-_ = require "underscore"
+_ = require "lodash"
 
 extendify = require "./extended"
-
 
 # monkeying around with this... so i can be lazier with additional stuffs.
 ds = null
@@ -38,7 +37,6 @@ crudify = (opts, req, fn) ->
   # define a list of protected querys to listen for and not do
   # searches with them
   privates = ['skip', 'limit', 'append', 'id', 'sort']
-
 
   # build out our search/query object
   query = {}

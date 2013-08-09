@@ -2,11 +2,11 @@
 # copy & paste this into your express app directory and 
 # include it like we have in `app.coffee`
 
-_ = require "underscore"
+_ = require "lodash"
 express = require "express"
 app = module.exports = express()
 
-nedb = require("restify-nedb").mount
+nedb = require("../lib").mount
 
 cfg = require "./config"
 
