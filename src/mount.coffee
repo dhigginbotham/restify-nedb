@@ -1,4 +1,4 @@
-_ = require "lodash"
+_ = require "underscore"
 path = require "path"
 util = require "util"
 
