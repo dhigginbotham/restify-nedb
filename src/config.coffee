@@ -36,7 +36,7 @@ config = (opts) ->
     
   @
 
-config::makeDateStore = (fn) ->
+config::makeDataStore = (fn) ->
   
   self = @
   

@@ -22,13 +22,18 @@ npm install restify-nedb --save
 ```js
 var express = require('express');
 var app = express();
-
 var server = require('http').createServer(app);
 
 app.set('port', 1337);
 
+app.use(express.compress());
+app.use(express.methodOverride());
+app.use(express.bodyParser());
+
 var restify = require('restify-nedb').mount;
 var config = require('restify-nedb').config;
+
+var path = require('path');
 
 // some sample middlware to throw at it
 var sampleMiddleware = function (req, res, next) {
@@ -38,7 +43,7 @@ var sampleMiddleware = function (req, res, next) {
 
 // default config options
 var opts = {
-  filePath: __dirname + '/db/filestore.db',
+  filePath: path.join(__dirname,'db','filestore.db'),
   maxAge: 1000 * 60 * 60,
   prefix: '/session',
   middleware: [sampleMiddleware]
@@ -55,6 +60,7 @@ cfg = new config(opts);
 // accepts sync/blocking
 
 // cfg.makeDataStore();
+
 // api = new restify(cfg, app);
 
 // or async <3
@@ -66,7 +72,7 @@ cfg.makeDataStore(function(err, ds_cfg) {
 });
 
 server.listen(app.get('port'), function () {
-  console.log('restify-nedb example listening on %s' app.get('port'));
+  console.log('restify-nedb example listening on %s', app.get('port'));
 });
 ```
 
@@ -86,17 +92,9 @@ Options | Defaults | Type | Infos
 
 ## Routes
 
-```md
-GET http://localhost:3000/session/v1
-POST http://localhost:3000/session/v1
+### `config.makeDataStore(err?, callback?)`
+- accepts either sync/async flow, if you don't have an `nedb` instance going, use this to create one -- otherwise pass it into your options object.
 
-GET http://localhost:3000/session/v1/:id
-PUT http://localhost:3000/session/v1/:id
-DELETE http://localhost:3000/session/v1/:id
-
-GET http://localhost:3000/session/v1?id=:id
-PUT http://localhost:3000/session/v1?id=:id
-```
 ## Ordering
 
 ### `?limit=20`
@@ -135,10 +133,20 @@ GET http://localhost:3000/session/v1?key=value
 
 - queries matching key/values
 
-## Additional
+## Defaults
+```md
+GET http://localhost:3000/session/v1
+POST http://localhost:3000/session/v1
 
-### `config.makeDataStore(err?, callback?)`
-- accepts either sync/async flow, if you don't have an `nedb` instance going, use this to create one -- otherwise pass it into your options object.
+GET http://localhost:3000/session/v1/:id
+PUT http://localhost:3000/session/v1/:id
+DELETE http://localhost:3000/session/v1/:id
+
+GET http://localhost:3000/session/v1?id=:id
+PUT http://localhost:3000/session/v1?id=:id
+```
+
+## Additional
 
 ### `?append=true`
 ```md
@@ -154,20 +162,18 @@ POST / PUT http://localhost:3000/session/v1
 
 - passing `_stale` in your body/json will act as an override to `stale`, say you need some things to last longer/shorter than other cached items
 
-### Tests
+## Tests
 
 ```md
 npm test
 ```
 
-### Cake tools
+## Cake tools
 - `cake build:docs` will build annotated source code documentation from docco
 - `cake build:coffee` will compile coffee from `/src` to js in `/lib`
 
-##### Pro-tips
+## Pro-tips
 - I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help.
-- If you want upto date / latest documentation run `cake docs`, this way if I forget, you can easily skim thru the source -- `/docs` should be included.
-
 
 
 ## License
