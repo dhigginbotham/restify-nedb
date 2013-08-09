@@ -15,6 +15,8 @@ app.use(express.bodyParser());
 
 var uri = "http://localhost:" + app.get('port');
 
+var api_path = uri + '/session/v1';
+
 // include nedb, and it's requirements
 var nedbConf = require('../lib').config;
 var nedbMount = require('../lib').mount;
@@ -34,6 +36,8 @@ var config = new nedbConf(opts);
 config.makeDateStore(function (err, ds) {
   new nedbMount(config, app);
 });
+
+var id = null;
 
 describe('starting restify-nedb test scripts', function () {
 
@@ -61,7 +65,7 @@ describe('starting restify-nedb test scripts', function () {
 
   it('should response with a good statusCode', function (done) {
 
-    request.get(uri + '/session/v1', function(err, resp) {
+    request.get(api_path, function(err, resp) {
       
       expect(err).to.be(null);
       expect(resp.statusCode).to.equal(200);
@@ -76,11 +80,12 @@ describe('starting restify-nedb test scripts', function () {
 
     var test = {test: "test posting new object"};
 
-    request.post(uri + '/session/v1').send(test).end(function (err, resp) {
+    request.post(api_path).send(test).end(function (err, resp) {
       
       expect(err).to.be(null);
       expect(resp.statusCode).to.equal(200);
       expect(resp.body).to.be.a('object');
+      id = resp.body._id
 
       done();
 
@@ -88,14 +93,14 @@ describe('starting restify-nedb test scripts', function () {
 
   });
 
-});
-
-describe('batch add multiple files to nedb', function () {
-
   it('should batch add 100 docs into nedb', function (done) {
 
     var postData = function (index, fn) {
-      request.post(uri + '/session/v1').send({test: "test posting new object"}).end(function (err, resp) {
+      request.post(api_path).send({test: "test posting new object"}).end(function (err, resp) {
+        expect(err).to.be(null);
+        expect(resp).not.to.be(null);
+        expect(resp.statusCode).to.be(200);
+        expect(resp.body.test).to.be("test posting new object");
         fn(null, resp.body);
       });
     };
@@ -111,6 +116,27 @@ describe('batch add multiple files to nedb', function () {
     });
 
   });
+
+  it('should get doc by _id', function (done) {
+
+    request.get(api_path + "/" + id, function(err, resp) {
+
+      expect(err).to.be(null);
+      expect(resp.statusCode).to.be(200);
+
+      done();
+
+    });
+
+  });
+
+  it('should update doc by _id (without append)')
+  it('should update doc by _id (with append)')
+  it('should update doc by _id with custom stale value')
+  it('should delete doc by _id')
+  it('should return 5 docs (with limit)')
+  it('should skip 5 docs (without limit)')
+  it('should return 5 docs skipping first 5 docs (with limit)')
 
 });
 
