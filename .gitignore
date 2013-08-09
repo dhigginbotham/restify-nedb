@@ -1,4 +1,4 @@
 node_modules/*
-db/nedb-filestore.db*
+db/*
 test/db/*
-examples\db\nedb*.db
+examples/db/*
