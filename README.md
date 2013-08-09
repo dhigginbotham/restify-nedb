@@ -1,38 +1,36 @@
-# restify-nedb (for [nedb](https://github.com/louischatriot/nedb)) <img src="https://badge.fury.io/js/restify-nedb.png" align="right" />&nbsp;<img src="https://drone.io/github.com/dhigginbotham/restify-nedb/status.png" align="right" />
-
+# restify-nedb (for [nedb](https://github.com/louischatriot/nedb)) <img src="https://drone.io/github.com/dhigginbotham/restify-nedb/status.png" align="right" />
 `restify-nedb` was built to give you restful api resources for client side application frameworks like `angular.js`, `ember.js`, `backbone.js` or `knockout.js` as well as give you a simple file/memory based cache utilizing [nedb](https://github.com/louischatriot/nedb). (ps, i love [nedb](https://github.com/louischatriot/nedb), you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. _Really neat._
-
-### Heads up, she's still a baby
-- Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way
-- There's still a good chunk of the `nedb` api I need to wrap in, if you need the core crud stuff, this should work well for you
-- I'd like to point out there coule be a few rough parts, but it's coming along.  
 
 ### Features
 - Super fast `nedb` file/memory backed cache w/ simple garbage collection
 - 100% coffeescript, hate it or love it 
 - restful routing: `GET`, `POST`, `PUT`, `DELETE` 
 - parses `json/multi-part`
+- Let me know if you have any issues, please open issues/prs etc, it's a lot more fun that way
 
-### Installation (w/ Express)
+----
 
-##### Step 1) Install the app, automatically add the latest version in your `package.json`
+<img src="https://nodei.co/npm/restify-nedb.png?downloads=true&amp;stars=true"/>
+
+### Installation
 
 ```
 npm install restify-nedb --save
 ```
 
-##### Step 2) Configure your app, needs access to `app`, so you can do that a number of ways, `req.app`, `res.app`, `app.use`, `app`, etc..
-
+### Example
 ```js
-
-  /* example in .js */
-
 var express = require('express');
 var app = express();
+
+var server = require('http').createServer(app);
+
+app.set('port', 1337);
 
 var restify = require('restify-nedb').mount;
 var config = require('restify-nedb').config;
 
+// some sample middlware to throw at it
 var sampleMiddleware = function (req, res, next) {
   console.log('here\'s a sample middleware...');
   return next();
@@ -53,41 +51,24 @@ cfg = new config(opts);
 // if you aren't already using an nedb
 // instance, then calling this will create
 // one for you.
-cfg.makeDataStore();
 
-// builds routes
-api = new restify(cfg, app);
+// accepts sync/blocking
+
+// cfg.makeDataStore();
+// api = new restify(cfg, app);
+
+// or async <3
+
+cfg.makeDataStore(function(err, ds_cfg) {
+  if (!err) {
+    api = new restify(ds_cfg, app);
+  };
+});
+
+server.listen(app.get('port'), function () {
+  console.log('restify-nedb example listening on %s' app.get('port'));
+});
 ```
-----
-```coffee
-express = require "express"
-app = module.exports = express()
-
-restify = require("restify-nedb").mount
-config = require("restify-nedb").config
-
-sampleMiddleware = (req, res, next) ->
-  console.log "here's a sample middleware..."
-  next()
-
-opts = 
-  filePath: conf.app.paths.cache
-  maxAge: 1000 * 60 * 60
-  prefix: "/session"
-  middleware: [sampleMiddleware]
-
-cfg = new config opts
-
-# if you aren't already using an nedb
-# instance, then calling this will create
-# one for you.
-cfg.makeDataStore()
-
-# builds routes
-api = new restify cfg, app
-```
-
-##### Step 3) Submit bugs and nasties [here](https://github.com/dhigginbotham/restify-nedb/issues).
 
 ## Configuration Options
 Options | Defaults | Type | Infos
@@ -116,45 +97,73 @@ DELETE http://localhost:3000/session/v1/:id
 GET http://localhost:3000/session/v1?id=:id
 PUT http://localhost:3000/session/v1?id=:id
 ```
-### Ordering
+## Ordering
 
+### `?limit=20`
 ```md
 GET http://localhost:3000/session/v1?limit=20
+```
+- `if (limit=20)` then it will only return 20 objects, etc.
+
+### `?skip=10`
+```md
 GET http://localhost:3000/session/v1?skip=10
+```
+- skip fields, good for paging
+
+### `?sort=val`
+```md
 GET http://localhost:3000/session/v1?sort=val
+```
+- sort doc in ascending
+
+### `?sort=-val`
+```md
 GET http://localhost:3000/session/v1?sort=-val
 ```
 
-### Query / Searching
+- sort doc in descending order
 
+----
+
+## Query / Searching
+
+### `?key=value`
 ```md
 GET http://localhost:3000/session/v1?key=value
 ```
 
-### Additional
+- queries matching key/values
 
+## Additional
+
+### `config.makeDataStore(err?, callback?)`
+- accepts either sync/async flow, if you don't have an `nedb` instance going, use this to create one -- otherwise pass it into your options object.
+
+### `?append=true`
 ```md
 PUT http://localhost:3000/session/v1/:id?append=true
 ```
+
 - append defaults to false. Set to true to do something similar to `findAndUpdate`
- 
+
+### `_stale` override
 ```md
-POST http://localhost:3000/session/v1
+POST / PUT http://localhost:3000/session/v1
 ```
 
-- `_stale` in your body/json will act as an override to `stale`, say you need some things to last longer/shorter than other cached items
- 
-##### Tests
+- passing `_stale` in your body/json will act as an override to `stale`, say you need some things to last longer/shorter than other cached items
+
+### Tests
 
 ```md
-mocha test\crud.coffee -R spec --compilers coffee:coffee-script
+npm test
 ```
 
 ##### Pro-tips
 - I would recommend using something like [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US) for testing, it'll help.
 - If you want upto date / latest documentation run `cake docs`, this way if I forget, you can easily skim thru the source -- `/docs` should be included.
 
-![](https://nodei.co/npm/restify-nedb.png?downloads=true&stars=true)
 
 
 ## License
