@@ -1,6 +1,4 @@
-# restify-nedb (for [nedb](https://github.com/louischatriot/nedb))
-
-![NPM version](https://badge.fury.io/js/restify-nedb.png)
+# restify-nedb (for [nedb](https://github.com/louischatriot/nedb)) <img src="https://badge.fury.io/js/restify-nedb.png" align="right" />&nbsp;<img src="https://drone.io/github.com/dhigginbotham/restify-nedb/status.png" align="right" />
 
 `restify-nedb` was built to give you restful api resources for client side application frameworks like `angular.js`, `ember.js`, `backbone.js` or `knockout.js` as well as give you a simple file/memory based cache utilizing [nedb](https://github.com/louischatriot/nedb). (ps, i love [nedb](https://github.com/louischatriot/nedb), you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. _Really neat._
 
