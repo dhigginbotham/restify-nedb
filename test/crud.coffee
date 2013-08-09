@@ -1,6 +1,6 @@
 request = require "request"
 expect = require "expect.js"
-_ = require "lodash"
+_ = require "underscore"
 
 express = require "express"
 app = express()

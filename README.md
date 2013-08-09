@@ -83,7 +83,7 @@ cfg = new config opts
 # if you aren't already using an nedb
 # instance, then calling this will create
 # one for you.
-cfg.ds()
+cfg.makeDataStore()
 
 # builds routes
 api = new restify cfg, app
