@@ -1,5 +1,5 @@
 DataStore = require 'nedb'
-_ = require "underscore"
+_ = require "lodash"
 fs = require "fs"
 path = require "path"
 

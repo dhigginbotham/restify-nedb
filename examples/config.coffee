@@ -1,4 +1,4 @@
-nedbConfig = require("restify-nedb").config
+nedbConfig = require("../lib").config
 path = require "path"
 fs = require "fs"
 
