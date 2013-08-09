@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -17,20 +16,23 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Restify NeDB</h1>
-        <p>Express module that adds a REST API for NeDB</p>
-        <p class="view"><a href="https://github.com/dhigginbotham/restify-nedb">View the Project on GitHub <small>dhigginbotham/restify-nedb</small></a></p>
+        <h1 class="header">Restify NeDB</h1>
+        <p class="header">Express module that adds a REST API for NeDB</p>
+
         <ul>
-          <li><a href="https://github.com/dhigginbotham/restify-nedb/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/dhigginbotham/restify-nedb/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/dhigginbotham/restify-nedb">View On <strong>GitHub</strong></a></li>
+          <li class="download"><a class="buttons" href="https://github.com/dhigginbotham/restify-nedb/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/dhigginbotham/restify-nedb/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/dhigginbotham/restify-nedb">View On GitHub</a></li>
         </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/dhigginbotham">dhigginbotham</a></p>
+
+
       </header>
       <section>
         <h1>
-<a name="restify-nedb-for-nedb" class="anchor" href="#restify-nedb-for-nedb"><span class="octicon octicon-link"></span></a>restify-nedb (for <a href="https://github.com/louischatriot/nedb">nedb</a>)</h1>
-
-<p><img src="https://badge.fury.io/js/restify-nedb.png" alt="NPM version"></p>
+<a name="restify-nedb-for-nedb-" class="anchor" href="#restify-nedb-for-nedb-"><span class="octicon octicon-link"></span></a>restify-nedb (for <a href="https://github.com/louischatriot/nedb">nedb</a>) <img src="https://badge.fury.io/js/restify-nedb.png" align="right"> <img src="https://drone.io/github.com/dhigginbotham/restify-nedb/status.png" align="right">
+</h1>
 
 <p><code>restify-nedb</code> was built to give you restful api resources for client side application frameworks like <code>angular.js</code>, <code>ember.js</code>, <code>backbone.js</code> or <code>knockout.js</code> as well as give you a simple file/memory based cache utilizing <a href="https://github.com/louischatriot/nedb">nedb</a>. (ps, i love <a href="https://github.com/louischatriot/nedb">nedb</a>, you should too.) If you haven't already checked it out, maybe you want to use it separate of all of this extra stuff, do it. It's like sqlite, with a subset of mongodb's api. <em>Really neat.</em></p>
 
@@ -93,7 +95,7 @@
 <span class="c1">// if you aren't already using an nedb</span>
 <span class="c1">// instance, then calling this will create</span>
 <span class="c1">// one for you.</span>
-<span class="nx">cfg</span><span class="p">.</span><span class="nx">ds</span><span class="p">();</span>
+<span class="nx">cfg</span><span class="p">.</span><span class="nx">makeDataStore</span><span class="p">();</span>
 
 <span class="c1">// builds routes</span>
 <span class="nx">api</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">restify</span><span class="p">(</span><span class="nx">cfg</span><span class="p">,</span> <span class="nx">app</span><span class="p">);</span>
@@ -120,7 +122,7 @@
 <span class="c1"># if you aren't already using an nedb</span>
 <span class="c1"># instance, then calling this will create</span>
 <span class="c1"># one for you.</span>
-<span class="nx">cfg</span><span class="p">.</span><span class="nx">ds</span><span class="p">()</span>
+<span class="nx">cfg</span><span class="p">.</span><span class="nx">makeDataStore</span><span class="p">()</span>
 
 <span class="c1"># builds routes</span>
 <span class="nv">api = </span><span class="k">new</span> <span class="nx">restify</span> <span class="nx">cfg</span><span class="p">,</span> <span class="nx">app</span>
@@ -289,12 +291,11 @@
 <span class="n">THE</span> <span class="n">SOFTWARE</span><span class="p">.</span>
 </pre></div>
       </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/dhigginbotham">dhigginbotham</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+		
   </body>
 </html>
