@@ -22,10 +22,8 @@ var nedbConf = require('../lib').config;
 var nedbMount = require('../lib').mount;
 
 var path = require('path');
-
 var fs = require('fs');
 
-var data = require('./data.json');
 var opts = {
   filePath: path.join(__dirname, 'db'),
   maxAge: 1000 * 60 * 60,

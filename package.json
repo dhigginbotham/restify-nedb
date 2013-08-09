@@ -34,7 +34,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "mocha test/express-rest.js -R spec -t 3000"
+    "test": "mocha test/restify-nedb.js -R spec -t 3000"
   },
   "bugs": "https://github.com/dhigginbotham/restify-nedb/issues",
   "repository": {
