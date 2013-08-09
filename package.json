@@ -18,8 +18,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "nedb": "latest",
-    "underscore": "~1.5.1"
+    "nedb": "~0.8.5",
+    "lodash": "~1.3.1"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3",
