@@ -15,24 +15,24 @@ app.use(express.bodyParser());
 
 var uri = 'http://localhost:' + app.get('port');
 
-var api_path = uri + '/session/v1';
+var api_path = uri + '/session';
 
 // include nedb, and it's requirements
 var nedbConf = require('../lib').config;
 var nedbMount = require('../lib').mount;
 
 var path = require('path');
-var fs = require('fs');
 
 var opts = {
   filePath: path.join(__dirname, 'db'),
   maxAge: 1000 * 60 * 60,
-  prefix: '/session'
+  prefix: '/session',
+  version: null
 };
 
 var config = new nedbConf(opts);
 
-config.makeDataStore(function (err, ds) {
+config.makeDataStore(function() {
   new nedbMount(config, app);
 });
 
@@ -52,7 +52,7 @@ describe('starting restify-nedb test scripts', function () {
   it('should have wired everything up, lets go!', function (done) {
     
     expect(config.prefix).to.be('/session');
-    expect(config.version).to.be('/v1');
+    expect(config.version).to.be(null);
     expect(config.middleware).to.be.an('array');
     expect(config.exclude).to.be.an('array');
     expect(config.ds).to.be.an('object');

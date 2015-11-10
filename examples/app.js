@@ -43,10 +43,10 @@ cfg = new config(opts);
 
 // or async <3
 
-cfg.makeDataStore(function(err, ds_cfg) {
+cfg.makeDataStore(function(err) {
   if (!err) {
-    api = new restify(ds_cfg, app);
-  };
+    api = new restify(cfg, app);
+  }
 });
 
 server.listen(app.get('port'), function () {

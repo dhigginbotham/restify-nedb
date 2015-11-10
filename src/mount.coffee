@@ -23,8 +23,12 @@ module.exports = (opts, app) ->
 
   if opts? then _.extend @, opts
 
-  # define our route uri w/ version, etc
-  uri = util.format if @version? or @version != false then @prefix + @version else @prefix
+  # setting this to null or false should just
+  # remove this as a nicety
+  if @version == null or @version == false
+    uri = util.format @prefix
+  else
+    uri = util.format @prefix + @version
 
   self = @
 

@@ -19,20 +19,20 @@ crudify = (opts, req, fn) ->
   Schema = ds.Schema
 
   # listen for `req.param('id')` will fallback until it finds the id
-  id = if req.param("id")? then {_id: req.param("id")} else {}
+  id = if typeof req.params.id != "undefined" and req.params.id? then {_id: req.params.id} else {}
   
   # `append` (Boolean) is a little trick to extend our update 
   # object with its original contents, plus any new content
   append = if req.query? and req.query.append? then true else false
 
   # `limit` accepts numbers, will limit the response amount 
-  limit = if req.param("limit")? then req.param("limit") else null
+  limit = if typeof req.query.limit != "undefined" and req.query.limit? then req.query.limit else null
   
   # `skip` works like a champ
-  skip = if req.param("skip")? then req.param("skip") else null
+  skip = if typeof req.query.skip != "undefined" and req.query.skip? then req.query.skip else null
 
   # `sort` handles multiples, like a boss. accepts asc/desc ie: "val" "-val"
-  sort = if req.param("sort")? then req.param("sort") else null
+  sort = if typeof req.query.sort != "undefined" and req.query.sort? then req.query.sort else null
 
   # define a list of protected querys to listen for and not do
   # searches with them
